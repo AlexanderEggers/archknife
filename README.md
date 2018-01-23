@@ -1,7 +1,7 @@
 Archknife
 =====
 
-Archknife is a android annotation library to generate the project's activity/fragment structure using dagger.
+Archknife is a android annotation library to generate the project's activity/fragment dagger structure.
 
 Download
 --------
