@@ -25,7 +25,7 @@ Compatibility
  
 TODO
 -------------
-* Implemenation
+* Implementation
 * Unit testing
 * Full documentation (source code and wiki)
 
