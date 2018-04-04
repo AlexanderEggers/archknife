@@ -1,0 +1,5 @@
+include ':examples', ':annotation', ':processor'
+project(":examples").name = "archknife-examples"
+project(":annotation").name = "archknife-annotation"
+project(":processor").name = "archknife-processor"
+rootProject.name = "archknife-library"
