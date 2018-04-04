@@ -1,27 +1,27 @@
 Archknife
 =====
 
-Archknife is a android annotation library to generate the project's activity/fragment dagger structure.
+Archknife is a android annotation library to generate the project's activity/fragment/viewmodel dagger structure.
 
 Download
 --------
 Coming soon!
 
-How do I use Archknife? (Step-by-step introduction for 1.0.0-alpha1)
+How do I use Archknife? (Step-by-step introduction for 0.1.0)
 -------------------
 Coming soon!
 
 Status
 ------
-Version 1 is still in development. Updates are currently released at least monthly with new features and bug fixes. **Please keep in mind that the api is not stable yet and might change!**
+Version 1.0.0 is currently under development in the master branch.
 
 Comments/bugs/questions/pull requests are always welcome!
 
 Compatibility
 -------------
 
- * **Minimum Android SDK**: Archknife requires a minimum API level of 14.
- * **Compile Android SDK**: Archknife requires you to compile against API 27.
+ * AutoIntent requires at minimum Java 7 or Android 2.3.
+ * AutoIntent requires at least dagger/dagger-android version 2.15.
  
 TODO
 -------------
