@@ -10,7 +10,7 @@ ext {
     libraryName = 'archknife-processor'
     artifact = 'archknife-processor'
 
-    libraryDescription = 'Android library to simplify the usage of Dagger or activities, fragments and viewmodels.'
+    libraryDescription = 'Android annotation library to generate the project\'s activity/fragment/viewmodel dagger structure.'
 
     siteUrl = 'https://github.com/Mordag/archknife'
     gitUrl = 'https://github.com/Mordag/archknife.git'
@@ -35,7 +35,6 @@ dependencies {
     implementation project(":archknife-annotation")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "com.squareup:javapoet:$javapoet_version"
 
     implementation "com.google.auto.service:auto-service:$autoservice_version"

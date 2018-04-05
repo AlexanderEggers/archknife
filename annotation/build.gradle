@@ -9,7 +9,7 @@ ext {
     libraryName = 'archknife-annotation'
     artifact = 'archknife-annotation'
 
-    libraryDescription = 'Android library to simplify the usage of Dagger or activities, fragments and viewmodels.'
+    libraryDescription = 'Android annotation library to generate the project\'s activity/fragment/viewmodel dagger structure.'
 
     siteUrl = 'https://github.com/Mordag/autointent'
     gitUrl = 'https://github.com/Mordag/autointent.git'
