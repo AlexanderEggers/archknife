@@ -23,7 +23,6 @@ class AppInjectorProcessor : HelperProcessor {
     private val classFragmentActivity = ClassName.get("android.support.v4.app", "FragmentActivity")
     private val classFragmentManager = ClassName.get("android.support.v4.app", "FragmentManager")
     private val classFragmentLifecycleCallbacks = ClassName.get("android.support.v4.app.FragmentManager", "FragmentLifecycleCallbacks")
-    private val classCallSuper = ClassName.get("android.support.annotation", "CallSuper")
 
     private val classAndroidInjector = ClassName.get("dagger.android", "AndroidInjection")
     private val classAndroidSupportInjection = ClassName.get("dagger.android.support", "AndroidSupportInjection")
@@ -47,7 +46,6 @@ class AppInjectorProcessor : HelperProcessor {
                         .build())
                 .addMethod(MethodSpec.methodBuilder("onActivityCreated")
                         .addModifiers(Modifier.PUBLIC)
-                        .addAnnotation(classCallSuper)
                         .addAnnotation(Override::class.java)
                         .addParameter(classActivity, "activity")
                         .addParameter(classBundle, "bundle")
