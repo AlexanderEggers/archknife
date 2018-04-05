@@ -26,7 +26,7 @@ class ProvideFragmentProcessor : AnnotationProcessor {
 
             val fileBuilder = TypeSpec.classBuilder(fragmentModelName)
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                    .addAnnotation(ProcessorUtil.classDaggerModule())
+                    .addAnnotation(ProcessorUtil.classModule())
 
             elements.forEach {
                 val fragmentPackage = fragmentWithPackage[it.simpleName.toString()]

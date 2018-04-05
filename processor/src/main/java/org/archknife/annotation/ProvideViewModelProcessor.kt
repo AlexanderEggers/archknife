@@ -12,15 +12,18 @@ import javax.tools.Diagnostic
 
 class ProvideViewModelProcessor : AnnotationProcessor {
 
-    private var classViewModelProvider: TypeName = ClassName.get("android.arch.lifecycle.ViewModelProvider", "Factory")
     private var classViewModelFactory = ClassName.get("org.archknife.generated", "ViewModelFactory")
+
+    private var classViewModelProvider: TypeName = ClassName.get("android.arch.lifecycle.ViewModelProvider", "Factory")
+    private var classBinds = ClassName.get("dagger", "Binds")
+    private var classIntoMap = ClassName.get("dagger.multibindings", "IntoMap")
 
     private val viewModelWithPackage: HashMap<String, String> = HashMap()
 
     override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         val fileBuilder = TypeSpec.classBuilder("ViewModelBuilderModule")
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                .addAnnotation(ProcessorUtil.classDaggerModule())
+                .addAnnotation(ProcessorUtil.classModule())
 
         prepareViewModelPackageMap(mainProcessor, roundEnv)
         generateViewModelProviderMethods(fileBuilder)
@@ -51,8 +54,8 @@ class ProvideViewModelProcessor : AnnotationProcessor {
 
             fileBuilder.addMethod(MethodSpec.methodBuilder("bind$viewModelName")
                     .addModifiers(Modifier.ABSTRACT)
-                    .addAnnotation(ProcessorUtil.classBinds())
-                    .addAnnotation(ProcessorUtil.classIntoMap())
+                    .addAnnotation(classBinds)
+                    .addAnnotation(classIntoMap)
                     .addAnnotation(AnnotationSpec.builder(ViewModelKey::class.java)
                             .addMember("viewModelClass", "$classViewModel.class")
                             .build())
@@ -63,7 +66,7 @@ class ProvideViewModelProcessor : AnnotationProcessor {
 
         fileBuilder.addMethod(MethodSpec.methodBuilder("bindViewModelFactory")
                 .addModifiers(Modifier.ABSTRACT)
-                .addAnnotation(ProcessorUtil.classBinds())
+                .addAnnotation(classBinds)
                 .addParameter(classViewModelFactory, "factory")
                 .returns(classViewModelProvider)
                 .build())

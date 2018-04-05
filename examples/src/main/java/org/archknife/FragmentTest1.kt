@@ -2,5 +2,5 @@ package org.archknife
 
 import org.archknife.annotation.ProvideFragment
 
-@ProvideFragment(MainActivity::class)
+@ProvideFragment(Demo1Activity::class)
 class FragmentTest1

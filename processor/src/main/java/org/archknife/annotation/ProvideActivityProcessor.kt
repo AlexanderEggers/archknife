@@ -21,10 +21,10 @@ class ProvideActivityProcessor : AnnotationProcessor {
     override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         val fileBuilder = TypeSpec.classBuilder("ActivityBuilderModule")
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                .addAnnotation(ProcessorUtil.classDaggerModule())
+                .addAnnotation(ProcessorUtil.classModule())
 
         prepareActivityPackageMap(mainProcessor, roundEnv)
-        generateActivityProviderMethods(fileBuilder)
+        generateActivityProviderMethods(fileBuilder, mainProcessor)
 
         val file = fileBuilder.build()
         JavaFile.builder("org.archknife.generated", file)
@@ -46,10 +46,16 @@ class ProvideActivityProcessor : AnnotationProcessor {
                 }
     }
 
-    private fun generateActivityProviderMethods(fileBuilder: TypeSpec.Builder) {
+    private fun generateActivityProviderMethods(fileBuilder: TypeSpec.Builder, mainProcessor: MainProcessor) {
         activitiesWithPackage.forEach { activityName, packageName ->
             val activityClass = ClassName.get(packageName, activityName)
-            val classFragmentModule = ProcessorUtil.classFragmentModule(activityName)
+
+            var fragmentModuleName = mainProcessor.fragmentModuleMap!![activityName]
+            if(fragmentModuleName == null) {
+                fragmentModuleName = ProcessorUtil.EMPTY_FRAGMENT_MODULE
+            }
+
+            val classFragmentModule = ClassName.get("org.archknife.generated.fragment", fragmentModuleName)
 
             fileBuilder.addMethod(MethodSpec.methodBuilder("contribute$activityName")
                     .addModifiers(Modifier.ABSTRACT)

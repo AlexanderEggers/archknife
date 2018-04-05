@@ -4,4 +4,4 @@ import android.support.v7.app.AppCompatActivity
 import org.archknife.annotation.ProvideActivity
 
 @ProvideActivity
-class MainActivity : AppCompatActivity()
+class Demo2Activity : AppCompatActivity()

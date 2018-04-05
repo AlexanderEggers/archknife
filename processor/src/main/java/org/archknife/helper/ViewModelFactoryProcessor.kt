@@ -12,7 +12,6 @@ class ViewModelFactoryProcessor: HelperProcessor {
     private var classViewModelProvider: TypeName = ClassName.get("android.arch.lifecycle.ViewModelProvider", "Factory")
     private var typeViewModel = TypeVariableName.get("T", ProcessorUtil.classViewModel())
 
-    private var classInject = ClassName.get("javax.inject", "Inject")
     private var classProvider = ClassName.get("javax.inject", "Provider")
     private var classMap = ClassName.get("java.util", "Map")
     private val classClass = ClassName.get("java.lang", "Class")
@@ -32,7 +31,7 @@ class ViewModelFactoryProcessor: HelperProcessor {
                         .build())
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PUBLIC)
-                        .addAnnotation(classInject)
+                        .addAnnotation(ProcessorUtil.classInject())
                         .addParameter(classMapType, "creators")
                         .addCode("this.creators = creators;\n")
                         .build())

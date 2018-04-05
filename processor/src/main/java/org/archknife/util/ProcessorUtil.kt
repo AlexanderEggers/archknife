@@ -10,6 +10,8 @@ class ProcessorUtil {
 
     companion object {
 
+        const val EMPTY_FRAGMENT_MODULE = "EmptyFragmentModule"
+
         fun getProvideFragmentType(element: Element): TypeMirror? {
             try {
                 element.getAnnotation(ProvideFragment::class.java).activityClass
@@ -19,20 +21,16 @@ class ProcessorUtil {
             return null
         }
 
+        fun classInject(): ClassName {
+            return ClassName.get("javax.inject", "Inject")
+        }
+
         fun classAndroidInjector(): ClassName {
             return ClassName.get("dagger.android", "ContributesAndroidInjector")
         }
 
-        fun classDaggerModule(): ClassName {
+        fun classModule(): ClassName {
             return ClassName.get("dagger", "Module")
-        }
-
-        fun classBinds(): ClassName {
-            return ClassName.get("dagger", "Binds")
-        }
-
-        fun classIntoMap(): ClassName {
-            return ClassName.get("dagger.multibindings", "IntoMap")
         }
 
         fun classViewModel(): ClassName {
@@ -43,8 +41,8 @@ class ProcessorUtil {
             return ClassName.get("android.support.annotation", "NonNull")
         }
 
-        fun classFragmentModule(activityName: String): ClassName {
-            return ClassName.get("org.archknife.generated.fragment", activityName + "Module")
+        fun nullable(): ClassName {
+            return ClassName.get("android.support.annotation", "Nullable")
         }
     }
 }
