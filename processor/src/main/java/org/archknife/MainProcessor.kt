@@ -2,9 +2,7 @@ package org.archknife
 
 import com.google.auto.service.AutoService
 import org.archknife.annotation.*
-import org.archknife.helper.AppInjectorProcessor
 import org.archknife.helper.EmptyFragmentModuleProcessor
-import org.archknife.helper.ViewModelFactoryProcessor
 import java.io.IOException
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
@@ -30,10 +28,8 @@ class MainProcessor : AbstractProcessor() {
 
     override fun process(set: MutableSet<out TypeElement>, roundEnv: RoundEnvironment): Boolean {
         try {
-            //Helper processor part - like for the class ViewModelFactory
-            ViewModelFactoryProcessor().process(filer!!)
+            //Helper processor part - like for the class EmptyFragmentModule
             EmptyFragmentModuleProcessor().process(filer!!)
-            AppInjectorProcessor().process(filer!!)
 
             //Annotation processor part - like for the annotation @ProvideActivity
             ProvideFragmentProcessor().process(this, roundEnv)
