@@ -32,7 +32,7 @@ dependencies {
 
 How do I use Archknife? (Step-by-step introduction for 0.1.0)
 -------------------
-Coming soon! For now, use the [example project][3] as reference.
+Coming soon! For now, use the [example project][3] as a reference.
 
 Status
 ------
