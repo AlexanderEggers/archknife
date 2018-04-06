@@ -1,11 +1,34 @@
 Archknife
 =====
 
-Archknife is a android annotation library to generate the project's activity/fragment/viewmodel dagger structure.
+Archknife is a android annotation library to generate the project's activity/fragment/viewmodel dagger structure. Dagger usually needs a certain amount of extra work in order to keep it's structure. Using this library, most of the structuring part won't be needed anymore.
+
+* Artifact which is used to access the possible annotations of this library.
+
+  [![Download](https://api.bintray.com/packages/mordag/android/archknife-annotation/images/download.svg) ](https://bintray.com/mordag/android/archknife-annotation/_latestVersion)
+
+* Artifact which includes the annotation processor.
+
+  [![Download](https://api.bintray.com/packages/mordag/android/archknife-processor/images/download.svg) ](https://bintray.com/mordag/android/archknife-processor/_latestVersion) 
+
+* Artifact for different helper classes which simplifies the usage of Dagger in general.
+
+  [![Download](https://api.bintray.com/packages/mordag/android/archknife-extension/images/download.svg) ](https://bintray.com/mordag/android/archknife-extension/_latestVersion)
 
 Download
 --------
-Coming soon!
+```gradle
+repositories {
+  jcenter()
+}
+
+dependencies {
+  implementation 'org.archknife:archknife-annotation:0.1.0'
+  kapt 'org.archknife:archknife-processor:0.1.0'
+  
+  implementation 'org.archknife:archknife-extension:0.1.0' //includes optional helper classes
+}
+```
 
 How do I use Archknife? (Step-by-step introduction for 0.1.0)
 -------------------
@@ -22,10 +45,10 @@ Compatibility
 
  * AutoIntent requires at minimum Java 7 or Android 2.3.
  * AutoIntent requires at least dagger/dagger-android version 2.15.
+ * The artifact **archknife-extension** requires at minimum Android 14.
  
 TODO
 -------------
-* Implementation
 * Unit testing
 * Full documentation (source code and wiki)
 
