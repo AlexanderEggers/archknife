@@ -2,11 +2,11 @@ package org.archknife.helper
 
 import com.squareup.javapoet.*
 import org.archknife.util.HelperProcessor
+import org.archknife.util.ProcessorUtil
 import javax.annotation.processing.Filer
 import javax.lang.model.element.Modifier
-import org.archknife.util.ProcessorUtil
 
-class EmptyFragmentModuleProcessor: HelperProcessor {
+class EmptyFragmentModuleProcessor : HelperProcessor {
 
     private val classFragment = ClassName.get("android.support.v4.app", "Fragment")
 

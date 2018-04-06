@@ -1,4 +1,4 @@
-package org.archknife.support
+package org.archknife.extension
 
 import android.app.Activity
 import android.app.Application

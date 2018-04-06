@@ -6,7 +6,7 @@ import android.app.Activity
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
-import org.archknife.support.AppInjector
+import org.archknife.extension.AppInjector
 
 class DemoApplication: Application(), HasActivityInjector {
 

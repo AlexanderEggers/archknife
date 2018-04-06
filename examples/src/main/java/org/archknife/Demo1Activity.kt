@@ -8,7 +8,7 @@ import dagger.android.AndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import org.archknife.annotation.ProvideActivity
 import dagger.android.DispatchingAndroidInjector
-import org.archknife.support.ViewModelFactory
+import org.archknife.extension.ViewModelFactory
 import javax.inject.Inject
 
 @ProvideActivity

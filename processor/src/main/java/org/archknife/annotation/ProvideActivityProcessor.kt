@@ -1,10 +1,6 @@
 package org.archknife.annotation
 
-import com.squareup.javapoet.AnnotationSpec
-import com.squareup.javapoet.ClassName
-import com.squareup.javapoet.JavaFile
-import com.squareup.javapoet.MethodSpec
-import com.squareup.javapoet.TypeSpec
+import com.squareup.javapoet.*
 import org.archknife.MainProcessor
 import org.archknife.util.AnnotationProcessor
 import org.archknife.util.ProcessorUtil
@@ -51,7 +47,7 @@ class ProvideActivityProcessor : AnnotationProcessor {
             val activityClass = ClassName.get(packageName, activityName)
 
             var fragmentModuleName = mainProcessor.fragmentModuleMap!![activityName]
-            if(fragmentModuleName == null) {
+            if (fragmentModuleName == null) {
                 fragmentModuleName = ProcessorUtil.EMPTY_FRAGMENT_MODULE
             }
 

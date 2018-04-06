@@ -1,4 +1,4 @@
-package org.archknife.support
+package org.archknife.extension
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider.Factory
