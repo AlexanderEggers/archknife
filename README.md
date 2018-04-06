@@ -32,7 +32,7 @@ dependencies {
 
 How do I use Archknife? (Step-by-step introduction for 0.1.0)
 -------------------
-Coming soon!
+Coming soon! For now, use the [example project][3] as reference.
 
 Status
 ------
@@ -63,3 +63,4 @@ Apache 2.0. See the [LICENSE][1] file for details.
 
 [1]: https://github.com/Mordag/archknife/blob/master/LICENSE
 [2]: https://github.com/Mordag
+[3]: https://github.com/Mordag/archknife/tree/master/examples
