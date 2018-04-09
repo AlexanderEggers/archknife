@@ -45,7 +45,6 @@ Compatibility
 
  * The artifacts **archknife-annotation** and **archknife-processor** require at minimum Java 7 or Android 2.3.
  * The artifact **archknife-extension** requires at minimum Android 14.
- * AutoIntent requires at least version 2.15 of Dagger.
  
 TODO
 -------------
