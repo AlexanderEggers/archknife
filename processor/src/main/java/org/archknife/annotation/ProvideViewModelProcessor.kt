@@ -12,7 +12,7 @@ import javax.tools.Diagnostic
 
 class ProvideViewModelProcessor : AnnotationProcessor {
 
-    private var classViewModelFactory = ClassName.get("org.archknife.generated", "ViewModelFactory")
+    private var classViewModelFactory = ClassName.get("org.archknife.extension", "ViewModelFactory")
 
     private var classViewModelProvider: TypeName = ClassName.get("android.arch.lifecycle.ViewModelProvider", "Factory")
     private var classBinds = ClassName.get("dagger", "Binds")
