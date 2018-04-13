@@ -1,8 +1,9 @@
-include ':examples', ':annotation', ':processor', ':extension', ':viewmodel', 'viewmodel-annotation'
+include ':examples', ':annotation', ':processor', ':extension', ':viewmodel', ':viewmodel-annotation', ':core'
 project(":examples").name = "archknife-examples"
 project(":annotation").name = "archknife-annotation"
 project(":processor").name = "archknife-processor"
 project(":extension").name = "archknife-extension"
 project(":viewmodel").name = "archknife-viewmodel"
 project(":viewmodel-annotation").name = "archknife-viewmodel-annotation"
+project(":core").name = "archknife-core"
 rootProject.name = "archknife-library"
