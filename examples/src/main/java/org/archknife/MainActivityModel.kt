@@ -5,4 +5,5 @@ import org.archknife.annotation.ProvideViewModel
 import javax.inject.Inject
 
 @ProvideViewModel
-class ViewModelTest @Inject constructor(): ViewModel()
+class MainActivityModel
+@Inject constructor() : ViewModel()

@@ -5,6 +5,7 @@ buildscript {
         javapoet_version = '1.10.0'
         autoservice_version = '1.0-rc4'
         lifecycle_version = '1.1.1'
+        support_lib_version = '27.1.1'
     }
 
     repositories {
@@ -14,7 +15,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
+        classpath 'com.android.tools.build:gradle:3.1.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"

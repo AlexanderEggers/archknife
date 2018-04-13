@@ -1,33 +1,34 @@
 package org.archknife
 
-import android.app.Application
-import javax.inject.Inject
 import android.app.Activity
+import android.app.Application
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import org.archknife.annotation.ProvideApplication
 import org.archknife.extension.AppInjector
+import javax.inject.Inject
 
-class DemoApplication: Application(), HasActivityInjector {
+@ProvideApplication
+class App : Application(), HasActivityInjector {
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
 
     @Inject
     lateinit var appInjector: AppInjector
 
-    private var appComponent: AppComponent? = null
-
     override fun onCreate() {
         super.onCreate()
-
-        this.appComponent = DaggerAppComponent.builder().application(this).build()
-        appComponent!!.inject(this)
+        val appComponent: AppComponent = DaggerAppComponent.builder()
+                .application(this)
+                .build()
+        appComponent.inject(this)
 
         appInjector.init(this)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {
-        return dispatchingAndroidInjector
+        return activityInjector
     }
 }

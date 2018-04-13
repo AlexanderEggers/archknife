@@ -12,7 +12,8 @@ import javax.tools.Diagnostic
 
 class ProvideViewModelProcessor : AnnotationProcessor {
 
-    private var classViewModelFactory = ClassName.get("org.archknife.extension", "ViewModelFactory")
+    private var classViewModelFactory = ClassName.get("org.archknife.viewmodel", "ViewModelFactory")
+    private var classViewModelKey = ClassName.get(MainProcessor.libraryPackage + ".util", "ViewModelKey")
 
     private var classViewModelProvider: TypeName = ClassName.get("android.arch.lifecycle.ViewModelProvider", "Factory")
     private var classBinds = ClassName.get("dagger", "Binds")
@@ -29,7 +30,7 @@ class ProvideViewModelProcessor : AnnotationProcessor {
         generateViewModelProviderMethods(fileBuilder)
 
         val file = fileBuilder.build()
-        JavaFile.builder("org.archknife.generated", file)
+        JavaFile.builder(MainProcessor.libraryPackage, file)
                 .build()
                 .writeTo(mainProcessor.filer)
     }
@@ -56,8 +57,8 @@ class ProvideViewModelProcessor : AnnotationProcessor {
                     .addModifiers(Modifier.ABSTRACT)
                     .addAnnotation(classBinds)
                     .addAnnotation(classIntoMap)
-                    .addAnnotation(AnnotationSpec.builder(ViewModelKey::class.java)
-                            .addMember("viewModelClass", "$classViewModel.class")
+                    .addAnnotation(AnnotationSpec.builder(classViewModelKey)
+                            .addMember("value", "$classViewModel.class")
                             .build())
                     .addParameter(classViewModel, "viewModel")
                     .returns(ProcessorUtil.classViewModel())

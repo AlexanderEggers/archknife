@@ -23,7 +23,7 @@ class ProvideActivityProcessor : AnnotationProcessor {
         generateActivityProviderMethods(fileBuilder, mainProcessor)
 
         val file = fileBuilder.build()
-        JavaFile.builder("org.archknife.generated", file)
+        JavaFile.builder(MainProcessor.libraryPackage, file)
                 .build()
                 .writeTo(mainProcessor.filer)
     }
@@ -51,7 +51,7 @@ class ProvideActivityProcessor : AnnotationProcessor {
                 fragmentModuleName = ProcessorUtil.EMPTY_FRAGMENT_MODULE
             }
 
-            val classFragmentModule = ClassName.get("org.archknife.generated.fragment", fragmentModuleName)
+            val classFragmentModule = ClassName.get(MainProcessor.libraryPackage + ".fragment", fragmentModuleName)
 
             fileBuilder.addMethod(MethodSpec.methodBuilder("contribute$activityName")
                     .addModifiers(Modifier.ABSTRACT)

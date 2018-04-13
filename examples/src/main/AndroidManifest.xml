@@ -4,7 +4,7 @@
     package="org.archknife">
 
     <application
-        android:name=".DemoApplication"
+        android:name=".App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -12,14 +12,13 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="org.archknife.Demo1Activity">
+        <activity android:name="org.archknife.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Demo2Activity" />
     </application>
 
 </manifest>

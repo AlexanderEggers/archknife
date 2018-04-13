@@ -21,10 +21,6 @@ class ProcessorUtil {
             return null
         }
 
-        fun classInject(): ClassName {
-            return ClassName.get("javax.inject", "Inject")
-        }
-
         fun classAndroidInjector(): ClassName {
             return ClassName.get("dagger.android", "ContributesAndroidInjector")
         }
@@ -35,14 +31,6 @@ class ProcessorUtil {
 
         fun classViewModel(): ClassName {
             return ClassName.get("android.arch.lifecycle", "ViewModel")
-        }
-
-        fun nonNull(): ClassName {
-            return ClassName.get("android.support.annotation", "NonNull")
-        }
-
-        fun nullable(): ClassName {
-            return ClassName.get("android.support.annotation", "Nullable")
         }
     }
 }

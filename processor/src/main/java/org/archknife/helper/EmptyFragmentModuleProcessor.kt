@@ -1,6 +1,7 @@
 package org.archknife.helper
 
 import com.squareup.javapoet.*
+import org.archknife.MainProcessor
 import org.archknife.util.HelperProcessor
 import org.archknife.util.ProcessorUtil
 import javax.annotation.processing.Filer
@@ -21,7 +22,7 @@ class EmptyFragmentModuleProcessor : HelperProcessor {
                 .superclass(classFragment)
 
         val file = fileBuilder.build()
-        JavaFile.builder("org.archknife.generated.util", file)
+        JavaFile.builder(MainProcessor.libraryPackage + ".util", file)
                 .build()
                 .writeTo(filer)
     }
@@ -31,7 +32,7 @@ class EmptyFragmentModuleProcessor : HelperProcessor {
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(ProcessorUtil.classModule())
 
-        val classFragment: TypeName = ClassName.get("org.archknife.generated.util", "EmptyFragment")
+        val classFragment: TypeName = ClassName.get(MainProcessor.libraryPackage + ".util", "EmptyFragment")
 
         fileBuilder.addMethod(MethodSpec.methodBuilder("contributeEmptyFragment")
                 .addModifiers(Modifier.ABSTRACT)
@@ -40,7 +41,7 @@ class EmptyFragmentModuleProcessor : HelperProcessor {
                 .build())
 
         val file = fileBuilder.build()
-        JavaFile.builder("org.archknife.generated.fragment", file)
+        JavaFile.builder(MainProcessor.libraryPackage + ".fragment", file)
                 .build()
                 .writeTo(filer)
     }

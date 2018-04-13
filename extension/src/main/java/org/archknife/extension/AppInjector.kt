@@ -18,7 +18,7 @@ class AppInjector @Inject constructor() : FragmentLifecycleCallbacks(), Activity
         application.registerActivityLifecycleCallbacks(this)
     }
 
-    override fun onActivityCreated(activity: Activity, bundle: Bundle) {
+    override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
         handleActivity(activity)
     }
 
@@ -41,11 +41,9 @@ class AppInjector @Inject constructor() : FragmentLifecycleCallbacks(), Activity
     }
 
     private fun handleActivity(activity: Activity) {
-        if (activity is HasSupportFragmentInjector) {
-            AndroidInjection.inject(activity)
-        }
+        AndroidInjection.inject(activity)
 
-        if (activity is FragmentActivity) {
+        if (activity is FragmentActivity && activity is HasSupportFragmentInjector) {
             activity.supportFragmentManager.registerFragmentLifecycleCallbacks(this, true)
         }
     }

@@ -40,7 +40,7 @@ class ProvideFragmentProcessor : AnnotationProcessor {
             }
 
             val file = fileBuilder.build()
-            JavaFile.builder("org.archknife.generated.fragment", file)
+            JavaFile.builder(MainProcessor.libraryPackage + ".fragment", file)
                     .build()
                     .writeTo(mainProcessor.filer)
 

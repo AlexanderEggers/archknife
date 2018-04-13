@@ -2,4 +2,4 @@ package org.archknife.annotation
 
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.CLASS)
-annotation class ProvideActivity
+annotation class ProvideApplication
