@@ -3,13 +3,17 @@ Archknife
 
 Archknife is a android annotation library to generate the project's activity/fragment/viewmodel dagger structure. Dagger usually needs a certain amount of extra work in order to keep it's structure. Using this library, most of the structuring part won't be needed anymore.
 
-* Artifact which is used to access the possible annotations of this library.
+* Artifact which is used to access the base annotations of this library.
 
   [![Download](https://api.bintray.com/packages/mordag/android/archknife-annotation/images/download.svg) ](https://bintray.com/mordag/android/archknife-annotation/_latestVersion)
 
 * Artifact which includes the annotation processor.
 
   [![Download](https://api.bintray.com/packages/mordag/android/archknife-processor/images/download.svg) ](https://bintray.com/mordag/android/archknife-processor/_latestVersion) 
+
+* Artifact for providing ViewModel objects to the structure (annotation + factory).
+
+  [![Download](https://api.bintray.com/packages/mordag/android/archknife-viewmodel/images/download.svg) ](https://bintray.com/mordag/android/archknife-viewmodel/_latestVersion)
 
 * Artifact for different helper classes which simplifies the usage of Dagger in general.
 
@@ -23,14 +27,15 @@ repositories {
 }
 
 dependencies {
-  implementation 'org.archknife:archknife-annotation:0.1.0'
-  kapt 'org.archknife:archknife-processor:0.1.0'
+  implementation 'org.archknife:archknife-annotation:0.2.0'
+  kapt 'org.archknife:archknife-processor:0.2.0'
   
-  implementation 'org.archknife:archknife-extension:0.1.0' //includes optional helper classes
+  implementation 'org.archknife:archknife-viewmodel:0.2.0' //ability to provide viewmodel to the structure
+  implementation 'org.archknife:archknife-extension:0.2.0' //includes optional helper classes
 }
 ```
 
-How do I use Archknife? (Step-by-step introduction for 0.1.0)
+How do I use Archknife? (Step-by-step introduction for 0.2.0)
 -------------------
 Coming soon! For now, use the [example project][3] as a reference.
 
@@ -44,7 +49,7 @@ Compatibility
 -------------
 
  * The artifacts **archknife-annotation** and **archknife-processor** require at minimum Java 7 or Android 2.3.
- * The artifact **archknife-extension** requires at minimum Android 14.
+ * The artifact **archknife-extension** and **archknife-viewmodel** requires at minimum Android 14.
  
 TODO
 -------------
