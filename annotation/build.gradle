@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/Mordag/autointent'
     gitUrl = 'https://github.com/Mordag/autointent.git'
 
-    libraryVersion = '0.1.1'
+    libraryVersion = "$archknife_library_version"
 
     developerId = 'mordag'
     developerName = 'Alexander Eggers'

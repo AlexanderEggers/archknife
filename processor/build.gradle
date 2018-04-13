@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/Mordag/archknife'
     gitUrl = 'https://github.com/Mordag/archknife.git'
 
-    libraryVersion = '0.1.1'
+    libraryVersion = "$archknife_library_version"
 
     developerId = 'mordag'
     developerName = 'Alexander Eggers'
@@ -33,7 +33,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(":archknife-annotation")
-    //implementation 'org.archknife:archknife-annotation:0.1.1'
+    //implementation "org.archknife:archknife-annotation:$archknife_library_version"
 
     implementation project(":archknife-viewmodel-annotation")
 

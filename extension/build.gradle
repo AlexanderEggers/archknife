@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/Mordag/archknife'
     gitUrl = 'https://github.com/Mordag/archknife.git'
 
-    libraryVersion = '0.1.1'
+    libraryVersion = "$archknife_library_version"
 
     developerId = 'mordag'
     developerName = 'Alexander Eggers'
@@ -34,7 +34,7 @@ android {
 
     defaultConfig {
         minSdkVersion 14
-        versionName "0.1.1"
+        versionName "$archknife_library_version"
         consumerProguardFiles 'proguard-rules.pro'
     }
 
