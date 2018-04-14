@@ -3,10 +3,6 @@ Archknife
 
 Archknife is a android annotation library to generate the project's activity/fragment/viewmodel dagger structure. Dagger usually needs a certain amount of extra work in order to keep it's structure. Using this library, most of the structuring part won't be needed anymore.
 
-* Artifact that bundles all relevant artifacts (annotation, viewmodel, viewmodel-annotation and extension).
-
-  [![Download](https://api.bintray.com/packages/mordag/android/archknife-core/images/download.svg) ](https://bintray.com/mordag/android/archknife-core/_latestVersion)
-
 * Artifact which is used to access the base annotations of this library.
 
   [![Download](https://api.bintray.com/packages/mordag/android/archknife-annotation/images/download.svg) ](https://bintray.com/mordag/android/archknife-annotation/_latestVersion)
@@ -35,8 +31,6 @@ repositories {
 }
 
 dependencies {
-  //artifact which bundles all relevant dependencies
-  implementation 'org.archknife:archknife-core:0.2.1'
   //just base annotations
   implementation 'org.archknife:archknife-annotation:0.2.1'
   //just viewmodel helper classes
