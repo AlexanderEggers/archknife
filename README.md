@@ -19,7 +19,7 @@ Archknife is a android annotation library to generate the project's activity/fra
 
   [![Download](https://api.bintray.com/packages/mordag/android/archknife-viewmodel/images/download.svg) ](https://bintray.com/mordag/android/archknife-viewmodel/_latestVersion)
   
-  * Artifact that includes the annotation for the viewmodel structure.
+* Artifact that includes the annotation for the viewmodel structure.
 
   [![Download](https://api.bintray.com/packages/mordag/android/archknife-viewmodel-annotation/images/download.svg) ](https://bintray.com/mordag/android/archknife-viewmodel-annotation/_latestVersion)
 
