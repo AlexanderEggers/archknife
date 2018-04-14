@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 
 ext {
     bintrayRepo = 'android'
-    bintrayName = 'archknife-extension'
+    bintrayName = 'archknife-core'
 
     publishedGroupId = 'org.archknife'
     libraryName = 'archknife-core'
@@ -52,9 +52,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    api project(":archknife-annotation")
-    api project(":archknife-viewmodel")
-    api project(":archknife-extension")
+    api "org.archknife:archknife-annotation:$archknife_library_version"
+    api "org.archknife:archknife-viewmodel:$archknife_library_version"
+    api "org.archknife:archknife-viewmodel-annotation:$archknife_library_version"
+    api "org.archknife:archknife-extension:$archknife_library_version"
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

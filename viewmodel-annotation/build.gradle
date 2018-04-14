@@ -1,8 +1,38 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
+ext {
+    bintrayRepo = 'android'
+    bintrayName = 'archknife-viewmodel-annotation'
+
+    publishedGroupId = 'org.archknife'
+    libraryName = 'archknife-viewmodel-annotation'
+    artifact = 'archknife-viewmodel-annotation'
+
+    libraryDescription = 'Android annotation library to generate the project\'s activity/fragment/viewmodel dagger structure.'
+
+    siteUrl = 'https://github.com/Mordag/autointent'
+    gitUrl = 'https://github.com/Mordag/autointent.git'
+
+    libraryVersion = "$archknife_library_version"
+
+    developerId = 'mordag'
+    developerName = 'Alexander Eggers'
+
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+    developerEmail = properties.getProperty("user.email", "")
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation "com.google.dagger:dagger:$dagger_version"
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
