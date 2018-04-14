@@ -21,11 +21,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(":archknife-core")
+    implementation project(":archknife-annotation")
+    implementation project(":archknife-viewmodel")
+    implementation project(":archknife-viewmodel-annotation")
+    implementation project(":archknife-extension")
     kapt project (":archknife-processor")
-
-    //implementation "org.archknife:archknife-core:$archknife_library_version"
-    //kapt "org.archknife:archknife-processor:$archknife_library_version"
 
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"

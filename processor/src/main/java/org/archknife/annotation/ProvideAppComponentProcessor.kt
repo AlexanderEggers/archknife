@@ -79,7 +79,7 @@ class ProvideAppComponentProcessor: AnnotationProcessor {
         var format = "{$classAndroidInjectionModule.class, $classActivityBuilder.class, $classViewModelBuilder.class"
 
         modulesWithPackage.forEach { moduleName, packageName ->
-            format += ", ${ClassName.get(moduleName, packageName)}.class"
+            format += ", ${ClassName.get(packageName, moduleName)}.class"
         }
 
         return "$format}"

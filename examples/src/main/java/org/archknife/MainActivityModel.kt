@@ -6,4 +6,9 @@ import javax.inject.Inject
 
 @ProvideViewModel
 class MainActivityModel
-@Inject constructor() : ViewModel()
+@Inject constructor(testObject: TestObject) : ViewModel() {
+
+    init {
+        testObject.doSomething()
+    }
+}
