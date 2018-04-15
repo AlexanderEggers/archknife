@@ -1,4 +1,3 @@
 package org.archknife.extension
 
-interface Injectable {
-}
+interface Injectable
