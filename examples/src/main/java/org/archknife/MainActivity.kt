@@ -11,8 +11,6 @@ import org.archknife.annotation.ProvideActivity
 import javax.inject.Inject
 import dagger.android.DispatchingAndroidInjector
 
-
-
 @ProvideActivity
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
