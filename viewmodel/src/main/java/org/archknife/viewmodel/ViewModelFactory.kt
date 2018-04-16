@@ -7,6 +7,12 @@ import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 
+/**
+ * This class is used to create new ViewModels or retain already existing ones. The underlying map
+ * for this object will be filled by Dagger when using the @ProvideViewModel annotation.
+ *
+ * @since 1.0.0
+ */
 @Suppress("UNCHECKED_CAST")
 @Singleton
 class ViewModelFactory @Inject
@@ -30,6 +36,5 @@ constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcard
         } catch (e: Exception) {
             throw RuntimeException(e)
         }
-
     }
 }
