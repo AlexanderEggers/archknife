@@ -58,7 +58,7 @@ Compatibility
 -------------
 
  * The artifacts **archknife-annotation**, **archknife-viewmodel-annotation** and **archknife-processor** require at minimum Java 7 or Android 2.3.
- * The artifact **archknife-core**, **archknife-extension** and **archknife-viewmodel** requires at minimum Android 14.
+ * The artifact **archknife-extension** and **archknife-viewmodel** requires at minimum Android 14.
  
 TODO
 -------------
