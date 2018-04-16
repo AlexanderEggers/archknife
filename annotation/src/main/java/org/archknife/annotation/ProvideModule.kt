@@ -1,6 +1,6 @@
 package org.archknife.annotation
 
 @MustBeDocumented
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
 annotation class ProvideModule
