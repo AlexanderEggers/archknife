@@ -38,6 +38,7 @@ class MainProcessor : AbstractProcessor() {
 
     override fun process(set: MutableSet<out TypeElement>, roundEnv: RoundEnvironment): Boolean {
         try {
+            //Determines the package and application for the processors
             prepareMainProcessor(this, roundEnv)
 
             //Helper processor part - like for the class EmptyFragmentModule
@@ -48,11 +49,12 @@ class MainProcessor : AbstractProcessor() {
             ProvideFragmentProcessor().process(this, roundEnv)
             ProvideActivityProcessor().process(this, roundEnv)
             ProvideViewModelProcessor().process(this, roundEnv)
-            ProvideAppComponentProcessor().process(this, roundEnv)
+
+            //AppComponent part - gathers all data from the other processors to build the dagger main file
+            AppComponentProcessor().process(this, roundEnv)
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
         return true
     }
 

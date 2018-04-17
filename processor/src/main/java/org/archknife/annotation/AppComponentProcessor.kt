@@ -9,7 +9,7 @@ import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 import javax.tools.Diagnostic
 
-class ProvideAppComponentProcessor: AnnotationProcessor {
+class AppComponentProcessor: AnnotationProcessor {
 
     private var classApplication = ClassName.get("android.app", "Application")
     private var classSingleton = ClassName.get("javax.inject", "Singleton")
