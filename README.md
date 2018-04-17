@@ -38,6 +38,7 @@ dependencies {
   //just viewmodel annotation; you also need to use the artifact archknife-viewmodel if you want to use this dependency!
   implementation 'org.archknife:archknife-viewmodel-annotation:0.2.1'
   //just optional helper classes
+  implementation 'org.archknife:archknife-extension:0.2.1'
   
   kapt 'org.archknife:archknife-processor:0.2.1'
 }
@@ -56,8 +57,7 @@ Comments/bugs/questions/pull requests are always welcome!
 Compatibility
 -------------
 
- * The artifacts **archknife-annotation**, **archknife-viewmodel-annotation** and **archknife-processor** require at minimum Java 7 or Android 2.3.
- * The artifact **archknife-core**, **archknife-extension** and **archknife-viewmodel** requires at minimum Android 14.
+ * The library requires at minimum Android 14.
  
 TODO
 -------------
