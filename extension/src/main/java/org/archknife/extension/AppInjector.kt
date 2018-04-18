@@ -68,7 +68,8 @@ class AppInjector @Inject constructor() : FragmentLifecycleCallbacks(), Activity
      * @see FragmentLifecycleCallbacks
      */
     private fun handleActivity(activity: Activity) {
-        if (activity is HasSupportFragmentInjector) {
+        //Determines if the given Activity is part of the Dagger structure.
+        if (activity is Injectable || activity is HasSupportFragmentInjector) {
             AndroidInjection.inject(activity)
         }
 
