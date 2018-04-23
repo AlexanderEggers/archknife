@@ -7,7 +7,7 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "org.archknife"
+        applicationId "org.demo.archknife"
         minSdkVersion 14
         targetSdkVersion 27
     }
@@ -21,10 +21,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(":archknife-annotation")
+    /*implementation project(":archknife-annotation")
     implementation project(":archknife-viewmodel")
     implementation project(":archknife-viewmodel-annotation")
-    implementation project(":archknife-extension")
+    implementation project(":archknife-extension")*/
+
+    implementation project(":archknife-core")
     kapt project (":archknife-processor")
 
     implementation "com.google.dagger:dagger:$dagger_version"

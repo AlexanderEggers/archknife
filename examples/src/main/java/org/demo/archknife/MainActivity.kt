@@ -1,4 +1,4 @@
-package org.archknife
+package org.demo.archknife
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders

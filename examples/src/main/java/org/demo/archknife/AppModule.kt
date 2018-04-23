@@ -1,4 +1,4 @@
-package org.archknife
+package org.demo.archknife
 
 import dagger.Module
 import dagger.Provides
