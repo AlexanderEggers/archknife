@@ -13,21 +13,21 @@ repositories {
 
 dependencies {
   //includes all library artifacts
-  implementation 'org.archknife:archknife-annotation:0.4.0'
+  implementation 'org.archknife:archknife-annotation:0.3.1'
   //just base annotations
-  implementation 'org.archknife:archknife-annotation:0.4.0'
+  implementation 'org.archknife:archknife-annotation:0.3.1'
   //just viewmodel helper classes
-  implementation 'org.archknife:archknife-viewmodel:0.4.0'
+  implementation 'org.archknife:archknife-viewmodel:0.3.1'
   //just viewmodel annotation; you also need to use the artifact archknife-viewmodel if you want to use this dependency!
-  implementation 'org.archknife:archknife-viewmodel-annotation:0.4.0'
+  implementation 'org.archknife:archknife-viewmodel-annotation:0.3.1'
   //just optional helper classes
-  implementation 'org.archknife:archknife-extension:0.4.0'
+  implementation 'org.archknife:archknife-extension:0.3.1'
   
-  kapt 'org.archknife:archknife-processor:0.4.0'
+  kapt 'org.archknife:archknife-processor:0.3.1'
 }
 ```
 
-How do I use Archknife? (Step-by-step introduction for 0.4.0)
+How do I use Archknife? (Step-by-step introduction for 0.3.1)
 -------------------
 Coming soon! For now, use the [example project][3] as a reference.
 
