@@ -22,7 +22,7 @@ import javax.inject.Singleton
  * @see AndroidInjection
  */
 @Singleton
-class AppInjector @Inject constructor() : FragmentLifecycleCallbacks(), ActivityLifecycleCallbacks {
+open class AppInjector @Inject constructor() : FragmentLifecycleCallbacks(), ActivityLifecycleCallbacks {
 
     /**
      * Attaches custom Activity lifecycle callbacks to the given Application object. These
