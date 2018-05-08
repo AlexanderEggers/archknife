@@ -59,14 +59,14 @@ class ProvideFragmentProcessor : AnnotationProcessor {
             fragmentWithPackage[typeElement.simpleName.toString()] =
                     mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
 
-            var activityName = ClassName.get(ProcessorUtil.getProvideFragmentType(it)).toString()
-            val splitName = activityName.split(".")
-            activityName = splitName[splitName.size - 1]
+            val objectActivity = ProcessorUtil.getProvideFragmentType(it)!!.asElement()
+            val activityName = objectActivity.simpleName.toString()
 
             var elements = activityFragmentMap[activityName]
             if (elements == null) {
                 elements = ArrayList()
             }
+
             elements.add(it)
             activityFragmentMap[activityName] = elements
         }

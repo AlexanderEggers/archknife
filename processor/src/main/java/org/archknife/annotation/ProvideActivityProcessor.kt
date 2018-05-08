@@ -8,11 +8,13 @@ import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.ElementKind
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
+import javax.lang.model.type.DeclaredType
 import javax.tools.Diagnostic
 
 class ProvideActivityProcessor : AnnotationProcessor {
 
     private val activitiesWithPackage: HashMap<String, String> = HashMap()
+    private val activitiesHasFragments: HashMap<String, Boolean> = HashMap()
 
     override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         val fileBuilder = TypeSpec.classBuilder("ActivityBuilderModule")
@@ -37,6 +39,13 @@ class ProvideActivityProcessor : AnnotationProcessor {
                     }
 
                     val typeElement = it as TypeElement
+                    typeElement.interfaces.forEach {
+                        val dc = it as DeclaredType
+                        if (dc.asElement().simpleName.toString() == "HasSupportFragmentInjector") {
+                            activitiesHasFragments[typeElement.simpleName.toString()] = true
+                        }
+                    }
+
                     activitiesWithPackage[typeElement.simpleName.toString()] =
                             mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
                 }
@@ -45,19 +54,22 @@ class ProvideActivityProcessor : AnnotationProcessor {
     private fun generateActivityProviderMethods(fileBuilder: TypeSpec.Builder, mainProcessor: MainProcessor) {
         activitiesWithPackage.forEach { activityName, packageName ->
             val activityClass = ClassName.get(packageName, activityName)
+            val activityHasFragment: Boolean = activitiesHasFragments[activityName] ?: false
+            val annotationBuilder = AnnotationSpec.builder(ProcessorUtil.classAndroidInjector())
 
-            var fragmentModuleName = mainProcessor.fragmentModuleMap!![activityName]
-            if (fragmentModuleName == null) {
-                fragmentModuleName = ProcessorUtil.EMPTY_FRAGMENT_MODULE
+            if (activityHasFragment) {
+                var fragmentModuleName = mainProcessor.fragmentModuleMap!![activityName]
+                if (fragmentModuleName == null) {
+                    fragmentModuleName = ProcessorUtil.EMPTY_FRAGMENT_MODULE
+                }
+
+                val classFragmentModule = ClassName.get(MainProcessor.libraryPackage + ".fragment", fragmentModuleName)
+                annotationBuilder.addMember("modules", "$classFragmentModule.class")
             }
-
-            val classFragmentModule = ClassName.get(MainProcessor.libraryPackage + ".fragment", fragmentModuleName)
 
             fileBuilder.addMethod(MethodSpec.methodBuilder("contribute$activityName")
                     .addModifiers(Modifier.ABSTRACT)
-                    .addAnnotation(AnnotationSpec.builder(ProcessorUtil.classAndroidInjector())
-                            .addMember("modules", "$classFragmentModule.class")
-                            .build())
+                    .addAnnotation(annotationBuilder.build())
                     .returns(activityClass)
                     .build())
         }

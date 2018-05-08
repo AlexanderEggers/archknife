@@ -3,6 +3,7 @@ package org.archknife.util
 import com.squareup.javapoet.ClassName
 import org.archknife.annotation.ProvideFragment
 import javax.lang.model.element.Element
+import javax.lang.model.type.DeclaredType
 import javax.lang.model.type.MirroredTypeException
 import javax.lang.model.type.TypeMirror
 
@@ -12,11 +13,11 @@ class ProcessorUtil {
 
         const val EMPTY_FRAGMENT_MODULE = "EmptyFragmentModule"
 
-        fun getProvideFragmentType(element: Element): TypeMirror? {
+        fun getProvideFragmentType(element: Element): DeclaredType? {
             try {
                 element.getAnnotation(ProvideFragment::class.java).activityClass
             } catch (mte: MirroredTypeException) {
-                return mte.typeMirror
+                return mte.typeMirror as DeclaredType
             }
             return null
         }
