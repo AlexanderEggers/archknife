@@ -13,22 +13,22 @@ repositories {
 
 dependencies {
   //includes all library artifacts
-  implementation 'org.archknife:archknife-core:0.3.1'
+  implementation 'org.archknife:archknife-core:0.3.2'
   
   //just base annotations
-  implementation 'org.archknife:archknife-annotation:0.3.1'
+  implementation 'org.archknife:archknife-annotation:0.3.2'
   //just viewmodel helper classes
-  implementation 'org.archknife:archknife-viewmodel:0.3.1'
+  implementation 'org.archknife:archknife-viewmodel:0.3.2'
   //just viewmodel annotation; useless for Dagger without the artifact 'archknife-viewmodel'
-  implementation 'org.archknife:archknife-viewmodel-annotation:0.3.1'
+  implementation 'org.archknife:archknife-viewmodel-annotation:0.3.2'
   //just optional helper classes
-  implementation 'org.archknife:archknife-extension:0.3.1'
+  implementation 'org.archknife:archknife-extension:0.3.2'
   
-  kapt 'org.archknife:archknife-processor:0.3.1'
+  kapt 'org.archknife:archknife-processor:0.3.2'
 }
 ```
 
-How do I use Archknife? (Step-by-step introduction for 0.3.1)
+How do I use Archknife? (Step-by-step introduction for 0.3.2)
 -------------------
 Coming soon! For now, use the [example project][3] as a reference.
 
