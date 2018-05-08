@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.app.Application.ActivityLifecycleCallbacks
 import android.os.Bundle
+import android.support.annotation.CallSuper
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
@@ -22,7 +23,8 @@ import javax.inject.Singleton
  * @see AndroidInjection
  */
 @Singleton
-open class AppInjector @Inject constructor() : FragmentLifecycleCallbacks(), ActivityLifecycleCallbacks {
+open class AppInjector
+@Inject constructor(private val contextProvider: ActivityContextProvider) : FragmentLifecycleCallbacks(), ActivityLifecycleCallbacks {
 
     /**
      * Attaches custom Activity lifecycle callbacks to the given Application object. These
@@ -36,13 +38,18 @@ open class AppInjector @Inject constructor() : FragmentLifecycleCallbacks(), Act
         application.registerActivityLifecycleCallbacks(this)
     }
 
+    @CallSuper
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
         handleActivity(activity)
+        setContext(activity)
     }
 
     override fun onActivityStarted(activity: Activity) {}
 
-    override fun onActivityResumed(activity: Activity) {}
+    @CallSuper
+    override fun onActivityResumed(activity: Activity) {
+        setContext(activity)
+    }
 
     override fun onActivityPaused(activity: Activity) {}
 
@@ -57,6 +64,10 @@ open class AppInjector @Inject constructor() : FragmentLifecycleCallbacks(), Act
         if (f is Injectable) {
             AndroidSupportInjection.inject(f)
         }
+    }
+
+    private fun setContext(activity: Activity) {
+        contextProvider.context = activity
     }
 
     /**
