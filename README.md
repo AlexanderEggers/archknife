@@ -14,6 +14,7 @@ repositories {
 dependencies {
   //includes all library artifacts
   implementation 'org.archknife:archknife-core:0.3.1'
+  
   //just base annotations
   implementation 'org.archknife:archknife-annotation:0.3.1'
   //just viewmodel helper classes
