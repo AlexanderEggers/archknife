@@ -1,7 +1,7 @@
 package org.demo.archknife
 
-import org.archknife.annotation.ProvideApplication
-import org.archknife.extension.ArchknifeApplication
+import archknife.annotation.ProvideApplication
+import archknife.extension.ArchknifeApplication
 
 @ProvideApplication
 class App : ArchknifeApplication()

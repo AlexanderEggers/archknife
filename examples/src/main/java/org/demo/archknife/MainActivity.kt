@@ -5,11 +5,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import archknife.annotation.ProvideActivity
 import dagger.android.AndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
-import org.archknife.annotation.ProvideActivity
-import javax.inject.Inject
 import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
 @ProvideActivity
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {

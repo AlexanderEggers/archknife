@@ -1,8 +1,8 @@
 package org.demo.archknife
 
+import archknife.annotation.ProvideModule
 import dagger.Module
 import dagger.Provides
-import org.archknife.annotation.ProvideModule
 import javax.inject.Singleton
 
 @ProvideModule
