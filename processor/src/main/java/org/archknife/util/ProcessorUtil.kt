@@ -5,7 +5,6 @@ import org.archknife.annotation.ProvideFragment
 import javax.lang.model.element.Element
 import javax.lang.model.type.DeclaredType
 import javax.lang.model.type.MirroredTypeException
-import javax.lang.model.type.TypeMirror
 
 class ProcessorUtil {
 
@@ -13,11 +12,11 @@ class ProcessorUtil {
 
         const val EMPTY_FRAGMENT_MODULE = "EmptyFragmentModule"
 
-        fun getProvideFragmentType(element: Element): DeclaredType? {
+        fun getProvideFragmentType(element: Element): List<DeclaredType>? {
             try {
-                element.getAnnotation(ProvideFragment::class.java).activityClass
+                element.getAnnotation(ProvideFragment::class.java).activityClasses
             } catch (mte: MirroredTypeException) {
-                return mte.typeMirror as DeclaredType
+                return mte.typeMirror as List<DeclaredType>
             }
             return null
         }

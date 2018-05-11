@@ -14,4 +14,4 @@ import kotlin.reflect.KClass
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
-annotation class ProvideFragment(val activityClass: KClass<*>)
+annotation class ProvideFragment(val activityClasses: Array<KClass<*>>)

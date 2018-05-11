@@ -10,6 +10,9 @@ import javax.lang.model.element.ElementKind
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 import javax.tools.Diagnostic
+import javax.lang.model.element.AnnotationValue
+import javax.lang.model.type.DeclaredType
+
 
 class ProvideFragmentProcessor : AnnotationProcessor {
 
@@ -48,27 +51,42 @@ class ProvideFragmentProcessor : AnnotationProcessor {
         }
     }
 
+    @Suppress("LABEL_NAME_CLASH", "UNCHECKED_CAST")
     private fun prepareFragmentMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        roundEnv.getElementsAnnotatedWith(ProvideFragment::class.java).forEach {
-            if (it.kind != ElementKind.CLASS) {
+        roundEnv.getElementsAnnotatedWith(ProvideFragment::class.java).forEach { fragmentElement ->
+            if (fragmentElement.kind != ElementKind.CLASS) {
                 mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be applied to class.")
                 return
             }
 
-            val typeElement = it as TypeElement
+            val typeElement = fragmentElement as TypeElement
             fragmentWithPackage[typeElement.simpleName.toString()] =
                     mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
 
-            val objectActivity = ProcessorUtil.getProvideFragmentType(it)!!.asElement()
-            val activityName = objectActivity.simpleName.toString()
+            fragmentElement.annotationMirrors.forEach {
+                it.elementValues.forEach {
+                    val key = it.key.simpleName.toString()
+                    val value = it.value.value
 
-            var elements = activityFragmentMap[activityName]
-            if (elements == null) {
-                elements = ArrayList()
+                    if(key == "activityClasses") {
+                        val typeMirrors = value as List<AnnotationValue>
+                        typeMirrors.forEach {
+                            val declaredType = it.value as DeclaredType
+                            val objectActivity = declaredType.asElement()
+                            val activityName = objectActivity.simpleName.toString()
+
+                            var elements = activityFragmentMap[activityName]
+                            if (elements == null) {
+                                elements = ArrayList()
+                            }
+
+                            elements.add(fragmentElement)
+                            activityFragmentMap[activityName] = elements
+                        }
+                        return@forEach
+                    }
+                }
             }
-
-            elements.add(it)
-            activityFragmentMap[activityName] = elements
         }
     }
 }
