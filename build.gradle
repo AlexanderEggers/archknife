@@ -7,7 +7,7 @@ buildscript {
         lifecycle_version = '1.1.1'
         support_lib_version = '27.1.1'
 
-        archknife_library_version = "0.3.2"
+        archknife_library_version = "0.4.0"
     }
 
     repositories {

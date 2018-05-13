@@ -21,10 +21,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    /*implementation project(":archknife-annotation")
-    implementation project(":archknife-viewmodel")
-    implementation project(":archknife-viewmodel-annotation")
-    implementation project(":archknife-extension")*/
+    //implementation "org.archknife:archknife-core:$archknife_library_version"
+    //kapt "org.archknife:archknife-processor:$archknife_library_version"
 
     implementation project(":archknife-core")
     kapt project (":archknife-processor")
