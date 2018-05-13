@@ -15,19 +15,26 @@ abstract class ArchknifeApplication : Application(), HasActivityInjector {
     @Inject
     lateinit var appInjector: AppInjector
 
+    private lateinit var appComponent: Any
+
     override fun onCreate() {
         super.onCreate()
 
-        val daggerClass = Class.forName(javaClass.`package`.name.toString() + ".DaggerAppComponent")
-        val daggerBuilderClass = Class.forName(javaClass.`package`.name.toString() + ".DaggerAppComponent\$Builder")
-        val appComponentClass = Class.forName(javaClass.`package`.name.toString() + ".AppComponent")
+        val daggerClass = Class.forName(javaClass.`package`.name.toString() + ".DaggerArchknifeComponent")
+        val daggerBuilderClass = Class.forName(javaClass.`package`.name.toString() + ".DaggerArchknifeComponent\$Builder")
+        val appComponentClass = Class.forName(javaClass.`package`.name.toString() + ".ArchknifeComponent")
 
         var builder: Any = daggerClass.getMethod("builder").invoke(null)
         builder = daggerBuilderClass.getDeclaredMethod("application", Application::class.java).invoke(builder, this@ArchknifeApplication)
-        val appComponent = daggerBuilderClass.getDeclaredMethod("build").invoke(builder)
+        appComponent = daggerBuilderClass.getDeclaredMethod("build").invoke(builder)
         appComponentClass.getDeclaredMethod("inject", javaClass).invoke(appComponent, this)
 
         appInjector.init(this)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> getAppComponent(): T {
+        return appComponent as T
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

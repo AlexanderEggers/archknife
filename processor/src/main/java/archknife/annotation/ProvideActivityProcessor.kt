@@ -2,7 +2,9 @@ package archknife.annotation
 
 import archknife.MainProcessor
 import archknife.util.AnnotationProcessor
-import archknife.util.ProcessorUtil
+import archknife.util.ProcessorUtil.classContributesAndroidInjector
+import archknife.util.ProcessorUtil.classEmptyFragmentModule
+import archknife.util.ProcessorUtil.classModule
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.ElementKind
@@ -17,9 +19,9 @@ class ProvideActivityProcessor : AnnotationProcessor {
     private val activitiesHasFragments: HashMap<String, Boolean> = HashMap()
 
     override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        val fileBuilder = TypeSpec.classBuilder("ActivityBuilderModule")
+        val fileBuilder = TypeSpec.classBuilder("Generated_ActivityBuilderModule")
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                .addAnnotation(ProcessorUtil.classModule())
+                .addAnnotation(classModule)
 
         prepareActivityPackageMap(mainProcessor, roundEnv)
         generateActivityProviderMethods(fileBuilder, mainProcessor)
@@ -55,15 +57,16 @@ class ProvideActivityProcessor : AnnotationProcessor {
         activitiesWithPackage.forEach { activityName, packageName ->
             val activityClass = ClassName.get(packageName, activityName)
             val activityHasFragment: Boolean = activitiesHasFragments[activityName] ?: false
-            val annotationBuilder = AnnotationSpec.builder(ProcessorUtil.classAndroidInjector())
+            val annotationBuilder = AnnotationSpec.builder(classContributesAndroidInjector)
 
             if (activityHasFragment) {
-                var fragmentModuleName = mainProcessor.fragmentModuleMap!![activityName]
-                if (fragmentModuleName == null) {
-                    fragmentModuleName = ProcessorUtil.EMPTY_FRAGMENT_MODULE
+                val fragmentModuleName = mainProcessor.fragmentModuleMap!![activityName]
+                val classFragmentModule = if (fragmentModuleName != null) {
+                    ClassName.get(MainProcessor.libraryPackage + ".fragment", fragmentModuleName)
+                } else {
+                    classEmptyFragmentModule
                 }
 
-                val classFragmentModule = ClassName.get(MainProcessor.libraryPackage + ".fragment", fragmentModuleName)
                 annotationBuilder.addMember("modules", "$classFragmentModule.class")
             }
 

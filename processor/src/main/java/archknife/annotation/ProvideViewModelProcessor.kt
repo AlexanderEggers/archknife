@@ -2,7 +2,13 @@ package archknife.annotation
 
 import archknife.MainProcessor
 import archknife.util.AnnotationProcessor
-import archknife.util.ProcessorUtil
+import archknife.util.ProcessorUtil.classBinds
+import archknife.util.ProcessorUtil.classIntoMap
+import archknife.util.ProcessorUtil.classModule
+import archknife.util.ProcessorUtil.classViewModel
+import archknife.util.ProcessorUtil.classViewModelFactory
+import archknife.util.ProcessorUtil.classViewModelKey
+import archknife.util.ProcessorUtil.classViewModelProviderFactory
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.ElementKind
@@ -12,19 +18,12 @@ import javax.tools.Diagnostic
 
 class ProvideViewModelProcessor : AnnotationProcessor {
 
-    private var classViewModelFactory = ClassName.get("archknife.viewmodel", "ViewModelFactory")
-    private var classViewModelKey = ClassName.get(MainProcessor.libraryPackage + ".util", "ViewModelKey")
-
-    private var classViewModelProvider: TypeName = ClassName.get("android.arch.lifecycle.ViewModelProvider", "Factory")
-    private var classBinds = ClassName.get("dagger", "Binds")
-    private var classIntoMap = ClassName.get("dagger.multibindings", "IntoMap")
-
     private val viewModelWithPackage: HashMap<String, String> = HashMap()
 
     override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        val fileBuilder = TypeSpec.classBuilder("ViewModelBuilderModule")
+        val fileBuilder = TypeSpec.classBuilder("Generated_ViewModelBuilderModule")
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                .addAnnotation(ProcessorUtil.classModule())
+                .addAnnotation(classModule)
 
         prepareViewModelPackageMap(mainProcessor, roundEnv)
         generateViewModelProviderMethods(fileBuilder)
@@ -51,17 +50,17 @@ class ProvideViewModelProcessor : AnnotationProcessor {
 
     private fun generateViewModelProviderMethods(fileBuilder: TypeSpec.Builder) {
         viewModelWithPackage.forEach { viewModelName, packageName ->
-            val classViewModel = ClassName.get(packageName, viewModelName)
+            val classViewModelImpl = ClassName.get(packageName, viewModelName)
 
             fileBuilder.addMethod(MethodSpec.methodBuilder("bind$viewModelName")
                     .addModifiers(Modifier.ABSTRACT)
                     .addAnnotation(classBinds)
                     .addAnnotation(classIntoMap)
                     .addAnnotation(AnnotationSpec.builder(classViewModelKey)
-                            .addMember("value", "$classViewModel.class")
+                            .addMember("value", "$classViewModelImpl.class")
                             .build())
-                    .addParameter(classViewModel, "viewModel")
-                    .returns(ProcessorUtil.classViewModel())
+                    .addParameter(classViewModelImpl, "viewModel")
+                    .returns(classViewModel)
                     .build())
         }
 
@@ -69,7 +68,7 @@ class ProvideViewModelProcessor : AnnotationProcessor {
                 .addModifiers(Modifier.ABSTRACT)
                 .addAnnotation(classBinds)
                 .addParameter(classViewModelFactory, "factory")
-                .returns(classViewModelProvider)
+                .returns(classViewModelProviderFactory)
                 .build())
     }
 }

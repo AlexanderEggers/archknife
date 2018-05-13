@@ -2,6 +2,12 @@ package archknife.annotation
 
 import archknife.MainProcessor
 import archknife.util.AnnotationProcessor
+import archknife.util.ProcessorUtil.classAndroidInjectionModule
+import archknife.util.ProcessorUtil.classApplication
+import archknife.util.ProcessorUtil.classBindsInstance
+import archknife.util.ProcessorUtil.classComponent
+import archknife.util.ProcessorUtil.classComponentBuilder
+import archknife.util.ProcessorUtil.classSingleton
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.ElementKind
@@ -11,22 +17,15 @@ import javax.tools.Diagnostic
 
 class AppComponentProcessor : AnnotationProcessor {
 
-    private var classApplication = ClassName.get("android.app", "Application")
-    private var classSingleton = ClassName.get("javax.inject", "Singleton")
-    private var classComponent = ClassName.get("dagger", "Component")
-    private var classComponentBuilder = ClassName.get("dagger.Component", "Builder")
-    private var classBindsInstance = ClassName.get("dagger", "BindsInstance")
-    private var classAndroidInjectionModule = ClassName.get("dagger.android", "AndroidInjectionModule")
-
-    private var classActivityBuilder = ClassName.get(MainProcessor.libraryPackage, "ActivityBuilderModule")
-    private var classViewModelBuilder = ClassName.get(MainProcessor.libraryPackage, "ViewModelBuilderModule")
+    private var classActivityBuilder = ClassName.get(MainProcessor.libraryPackage, "Generated_ActivityBuilderModule")
+    private var classViewModelBuilder = ClassName.get(MainProcessor.libraryPackage, "Generated_ViewModelBuilderModule")
 
     private val modulesWithPackage: HashMap<String, String> = HashMap()
 
     override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         prepareModulesPackageMap(mainProcessor, roundEnv)
 
-        val fileBuilder = TypeSpec.interfaceBuilder("AppComponent")
+        val fileBuilder = TypeSpec.interfaceBuilder("ArchknifeComponent")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(classSingleton)
                 .addAnnotation(AnnotationSpec.builder(classComponent)
@@ -40,14 +39,14 @@ class AppComponentProcessor : AnnotationProcessor {
                                 .addAnnotation(classBindsInstance)
                                 .addParameter(classApplication, "application")
                                 .returns(ClassName.get(
-                                        MainProcessor.appComponentPackage + ".AppComponent",
+                                        MainProcessor.appComponentPackage + ".ArchknifeComponent",
                                         "Builder"
                                 ))
                                 .build())
                         .addMethod(MethodSpec.methodBuilder("build")
                                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                                 .returns(ClassName.get(MainProcessor.appComponentPackage,
-                                        "AppComponent"))
+                                        "ArchknifeComponent"))
                                 .build())
                         .build())
                 .addMethod(MethodSpec.methodBuilder("inject")

@@ -2,13 +2,13 @@ package archknife.annotation
 
 import archknife.MainProcessor
 import archknife.util.AnnotationProcessor
-import archknife.util.ProcessorUtil
+import archknife.util.ProcessorUtil.classContributesAndroidInjector
+import archknife.util.ProcessorUtil.classModule
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.*
 import javax.lang.model.type.DeclaredType
 import javax.tools.Diagnostic
-
 
 class ProvideFragmentProcessor : AnnotationProcessor {
 
@@ -21,11 +21,11 @@ class ProvideFragmentProcessor : AnnotationProcessor {
         activityFragmentMap.forEach {
             val activityName = it.key
             val elements: ArrayList<Element> = it.value
-            val fragmentModelName = activityName + "Module"
+            val fragmentModelName = "Generated_" + activityName + "Module"
 
             val fileBuilder = TypeSpec.classBuilder(fragmentModelName)
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                    .addAnnotation(ProcessorUtil.classModule())
+                    .addAnnotation(classModule)
 
             elements.forEach {
                 val fragmentPackage = fragmentWithPackage[it.simpleName.toString()]
@@ -33,7 +33,7 @@ class ProvideFragmentProcessor : AnnotationProcessor {
 
                 fileBuilder.addMethod(MethodSpec.methodBuilder("contribute${it.simpleName}")
                         .addModifiers(Modifier.ABSTRACT)
-                        .addAnnotation(ProcessorUtil.classAndroidInjector())
+                        .addAnnotation(classContributesAndroidInjector)
                         .returns(classFragment)
                         .build())
             }

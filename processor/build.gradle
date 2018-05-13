@@ -35,9 +35,6 @@ dependencies {
     implementation project(":archknife-annotation")
     //implementation "org.archknife:archknife-annotation:$archknife_library_version"
 
-    implementation project(":archknife-viewmodel-annotation")
-    //implementation "org.archknife:archknife-viewmodel-annotation:$archknife_library_version"
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.squareup:javapoet:$javapoet_version"
 

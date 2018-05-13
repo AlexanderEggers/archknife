@@ -1,8 +1,6 @@
 package archknife
 
 import archknife.annotation.*
-import archknife.helper.EmptyFragmentModuleProcessor
-import archknife.helper.ViewModelKeyProcessor
 import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
 import java.io.IOException
@@ -40,10 +38,6 @@ class MainProcessor : AbstractProcessor() {
         try {
             //Determines the package and application for the processors
             prepareMainProcessor(this, roundEnv)
-
-            //Helper processor part - like for the class EmptyFragmentModule
-            EmptyFragmentModuleProcessor().process(filer!!)
-            ViewModelKeyProcessor().process(filer!!)
 
             //Annotation processor part - like for the annotation @ProvideActivity
             ProvideFragmentProcessor().process(this, roundEnv)
