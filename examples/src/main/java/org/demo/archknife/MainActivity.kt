@@ -20,13 +20,13 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private var mainViewModel: MainActivityModel? = null
+    private lateinit var mainViewViewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(MainActivityModel::class.java)
+        mainViewViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(MainActivityViewModel::class.java)
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {

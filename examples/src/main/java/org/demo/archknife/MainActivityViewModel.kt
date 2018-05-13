@@ -5,7 +5,7 @@ import archknife.annotation.ProvideViewModel
 import javax.inject.Inject
 
 @ProvideViewModel
-class MainActivityModel
+class MainActivityViewModel
 @Inject constructor(testObject: TestObject) : ViewModel() {
 
     init {

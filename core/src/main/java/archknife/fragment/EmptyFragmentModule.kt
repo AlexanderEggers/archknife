@@ -1,4 +1,4 @@
-package archknife.util
+package archknife.fragment
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -7,5 +7,5 @@ import dagger.android.ContributesAndroidInjector
 abstract class EmptyFragmentModule {
 
     @ContributesAndroidInjector
-    internal abstract fun contributeEmptyFragment(): EmptyFragment
+    abstract fun contributeEmptyFragment(): EmptyFragment
 }

@@ -6,7 +6,7 @@ object ProcessorUtil {
 
     val classViewModelFactory: ClassName = ClassName.get("archknife.viewmodel", "ViewModelFactory")
     val classViewModelKey: ClassName = ClassName.get("archknife.viewmodel", "ViewModelKey")
-    val classEmptyFragmentModule: ClassName = ClassName.get("archknife.util", "EmptyFragmentModule")
+    val classEmptyFragmentModule: ClassName = ClassName.get("archknife.fragment", "EmptyFragmentModule")
 
     val classViewModelProviderFactory: ClassName = ClassName.get("android.arch.lifecycle.ViewModelProvider", "Factory")
     val classViewModel: ClassName = ClassName.get("android.arch.lifecycle", "ViewModel")
