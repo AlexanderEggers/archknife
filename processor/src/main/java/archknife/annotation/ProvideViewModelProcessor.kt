@@ -35,17 +35,17 @@ class ProvideViewModelProcessor : AnnotationProcessor {
     }
 
     private fun prepareViewModelPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java)
-                .forEach {
-                    if (it.kind != ElementKind.CLASS) {
-                        mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be applied to class.")
-                        return
-                    }
+        roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java).forEach {
+            if (it.kind != ElementKind.CLASS) {
+                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                        "applied to a class.")
+                return
+            }
 
-                    val typeElement = it as TypeElement
-                    viewModelWithPackage[typeElement.simpleName.toString()] =
-                            mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
-                }
+            val typeElement = it as TypeElement
+            viewModelWithPackage[typeElement.simpleName.toString()] =
+                    mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
+        }
     }
 
     private fun generateViewModelProviderMethods(fileBuilder: TypeSpec.Builder) {

@@ -55,7 +55,8 @@ class MainProcessor : AbstractProcessor() {
     private fun prepareMainProcessor(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         roundEnv.getElementsAnnotatedWith(ProvideApplication::class.java).forEach {
             if (it.kind != ElementKind.CLASS) {
-                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be applied to class.")
+                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                        "applied to a class.")
                 return
             }
 

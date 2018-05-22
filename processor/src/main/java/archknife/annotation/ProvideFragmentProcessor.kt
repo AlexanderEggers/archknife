@@ -51,7 +51,8 @@ class ProvideFragmentProcessor : AnnotationProcessor {
     private fun prepareFragmentMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         roundEnv.getElementsAnnotatedWith(ProvideFragment::class.java).forEach { fragmentElement ->
             if (fragmentElement.kind != ElementKind.CLASS) {
-                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be applied to class.")
+                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                        "applied to a class.")
                 return
             }
 

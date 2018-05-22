@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
  * that the related Activity, that is needed for this annotation, includes the HasFragmentInjector
  * interface. Addition to that, if you want to use the AppInjector, your Fragment should use the
  * interface Injectable. AppInjector and Injectable can be found using the artifact
- * 'archknife-extension'.
+ * 'archknife-core'.
  *
  * @since 1.0.0
  */

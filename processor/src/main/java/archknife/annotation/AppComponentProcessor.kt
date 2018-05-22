@@ -61,17 +61,17 @@ class AppComponentProcessor : AnnotationProcessor {
     }
 
     private fun prepareModulesPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        roundEnv.getElementsAnnotatedWith(ProvideModule::class.java)
-                .forEach {
-                    if (it.kind != ElementKind.CLASS) {
-                        mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be applied to class.")
-                        return
-                    }
+        roundEnv.getElementsAnnotatedWith(ProvideModule::class.java).forEach {
+            if (it.kind != ElementKind.CLASS) {
+                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                        "applied to a class.")
+                return
+            }
 
-                    val typeElement = it as TypeElement
-                    modulesWithPackage[typeElement.simpleName.toString()] =
-                            mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
-                }
+            val typeElement = it as TypeElement
+            modulesWithPackage[typeElement.simpleName.toString()] =
+                    mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
+        }
     }
 
     private fun createComponentAnnotationFormat(): String {

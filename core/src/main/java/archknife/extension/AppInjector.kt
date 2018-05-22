@@ -66,6 +66,12 @@ open class AppInjector
         }
     }
 
+    /**
+     * Assigns a context object to the context provider so it can be used for dependencies that
+     * need an activity context.
+     *
+     * @param activity an Activity object
+     */
     private fun setContext(activity: Activity) {
         contextProvider.context = activity
     }

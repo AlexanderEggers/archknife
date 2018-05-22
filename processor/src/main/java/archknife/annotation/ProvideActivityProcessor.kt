@@ -32,17 +32,17 @@ class ProvideActivityProcessor : AnnotationProcessor {
 
     @Suppress("LABEL_NAME_CLASH")
     private fun prepareActivityPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java)
-                .forEach {
-                    if (it.kind != ElementKind.CLASS) {
-                        mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be applied to class.")
-                        return
-                    }
+        roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java).forEach {
+            if (it.kind != ElementKind.CLASS) {
+                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                        "applied to a class.")
+                return
+            }
 
-                    val typeElement = it as TypeElement
-                    activitiesWithPackage[typeElement.simpleName.toString()] =
-                            mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
-                }
+            val typeElement = it as TypeElement
+            activitiesWithPackage[typeElement.simpleName.toString()] =
+                    mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
+        }
     }
 
     private fun generateActivityProviderMethods(fileBuilder: TypeSpec.Builder, mainProcessor: MainProcessor) {
