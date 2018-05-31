@@ -4,11 +4,11 @@ apply plugin: 'kotlin-kapt'
 
 ext {
     bintrayRepo = 'android'
-    bintrayName = 'archknife-core'
+    bintrayName = 'archknife-context'
 
     publishedGroupId = 'org.archknife'
-    libraryName = 'archknife-core'
-    artifact = 'archknife-core'
+    libraryName = 'archknife-context'
+    artifact = 'archknife-context'
 
     libraryDescription = 'Android annotation library to generate the project\'s activity/fragment/viewmodel dagger structure.'
 
@@ -53,23 +53,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
-    implementation ("com.android.support:support-fragment:$support_lib_version") {
-        exclude group: "com.android.support", module: "animated-vector-drawable"
-    }
-
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
-
-    implementation "com.google.dagger:dagger-android:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-
-    //api "org.archknife:archknife-annotation:$archknife_library_version"
-    api project(":archknife-annotation")
-
-    //api "org.archknife:archknife-context:$archknife_library_version"
-    api project(":archknife-context")
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

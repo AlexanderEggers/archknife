@@ -20,6 +20,8 @@ class AppComponentProcessor : AnnotationProcessor {
     private var classActivityBuilder = ClassName.get(MainProcessor.libraryPackage, "Generated_ActivityBuilderModule")
     private var classViewModelBuilder = ClassName.get(MainProcessor.libraryPackage, "Generated_ViewModelBuilderModule")
 
+    private var classContextModule = ClassName.get("archknife.context", "ContextModule")
+
     private val modulesWithPackage: HashMap<String, String> = HashMap()
 
     override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
@@ -75,7 +77,8 @@ class AppComponentProcessor : AnnotationProcessor {
     }
 
     private fun createComponentAnnotationFormat(): String {
-        var format = "{$classAndroidInjectionModule.class, $classActivityBuilder.class, $classViewModelBuilder.class"
+        var format = "{$classAndroidInjectionModule.class, $classActivityBuilder.class, " +
+                "$classViewModelBuilder.class, $classContextModule.class"
 
         modulesWithPackage.forEach { moduleName, packageName ->
             format += ", ${ClassName.get(packageName, moduleName)}.class"

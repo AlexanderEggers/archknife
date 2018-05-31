@@ -1,6 +1,7 @@
-include ':examples', ':annotation', ':processor', ':core'
+include ':examples', ':annotation', ':processor', ':core', ':context'
 project(":examples").name = "archknife-examples"
 project(":annotation").name = "archknife-annotation"
 project(":processor").name = "archknife-processor"
 project(":core").name = "archknife-core"
+project(":context").name = "archknife-context"
 rootProject.name = "archknife-library"

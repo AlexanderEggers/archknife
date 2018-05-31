@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks
+import archknife.context.ContextProvider
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
@@ -24,7 +25,7 @@ import javax.inject.Singleton
  */
 @Singleton
 open class AppInjector
-@Inject constructor(private val contextProvider: ActivityContextProvider) : FragmentLifecycleCallbacks(), ActivityLifecycleCallbacks {
+@Inject constructor(private val contextProvider: ContextProvider) : FragmentLifecycleCallbacks(), ActivityLifecycleCallbacks {
 
     /**
      * Attaches custom Activity lifecycle callbacks to the given Application object. These
