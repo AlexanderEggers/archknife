@@ -5,7 +5,7 @@ import java.lang.ref.WeakReference
 
 object ContextProvider {
 
-    var contextRef: WeakReference<Context?> = WeakReference(null)
+    private var contextRef: WeakReference<Context?> = WeakReference(null)
 
     var context: Context?
         get() = contextRef.get()
