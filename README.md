@@ -15,15 +15,21 @@ repositories {
 
 dependencies {
   //includes all library artifacts
-  implementation 'org.archknife:archknife-core:0.4.0'
+  implementation 'org.archknife:archknife-core:0.5.0'
   //just annotations
-  implementation 'org.archknife:archknife-annotation:0.4.0'
+  implementation 'org.archknife:archknife-annotation:0.5.0'
+  //just context helper classes
+  implementation 'org.archknife:archknife-context:0.5.0'
   
-  kapt 'org.archknife:archknife-processor:0.4.0'
+  kapt 'org.archknife:archknife-processor:0.5.0'
+  
+  //keep in mind that you will need to use the dagger kapt dependency next to the library dependencies
+  kapt "com.google.dagger:dagger-compiler:2.16"
+  kapt "com.google.dagger:dagger-android-processor:2.16"
 }
 ```
 
-How do I use Archknife? (Step-by-step introduction for 0.4.0)
+How do I use Archknife? (Step-by-step introduction for 0.5.0)
 -------------------
 Archknife has five different annotation types.
 
