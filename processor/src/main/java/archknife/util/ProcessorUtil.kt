@@ -28,7 +28,5 @@ object ProcessorUtil {
     fun generatedActivityBuilderModuleClassName(): String = "Generated_ActivityBuilderModule"
     fun generatedComponentClassName(): String = "ArchknifeComponent"
 
-    fun getLibraryPackage(basePackage: String): String {
-        return "$basePackage.di"
-    }
+    fun getLibraryPackage(basePackage: String): String = "$basePackage.di"
 }
