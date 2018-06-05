@@ -7,6 +7,12 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
+/**
+ * Abstract class which takes care of the initialising of the Dagger related components. It also
+ * starts the AppInjector which is injecting any dependencies inside project classes.
+ *
+ * @since 1.0.0
+ */
 abstract class ArchknifeApplication : Application(), HasActivityInjector {
 
     @Inject

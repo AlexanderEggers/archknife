@@ -14,4 +14,10 @@ import kotlin.reflect.KClass
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
-annotation class ProvideFragment(val activityClasses: Array<KClass<*>>)
+annotation class ProvideFragment(
+        /**
+         * Returns an array of activities that will use this fragment. The declared fragment will
+         * be written inside the relevant module class (of each activity) that will be used by the
+         * AndroidInjector.
+         */
+        val activityClasses: Array<KClass<*>>)

@@ -73,7 +73,7 @@ open class AppInjector
      *
      * @param activity an Activity object
      */
-    private fun setContext(activity: Activity) {
+    protected open fun setContext(activity: Activity) {
         contextProvider.context = activity
     }
 
@@ -85,7 +85,7 @@ open class AppInjector
      * @see HasSupportFragmentInjector
      * @see FragmentLifecycleCallbacks
      */
-    private fun handleActivity(activity: Activity) {
+    protected open fun handleActivity(activity: Activity) {
         //Determines if the given Activity is part of the Dagger structure.
         if (activity is Injectable || activity is HasSupportFragmentInjector) {
             AndroidInjection.inject(activity)
