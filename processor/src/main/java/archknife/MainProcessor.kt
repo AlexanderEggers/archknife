@@ -1,6 +1,7 @@
 package archknife
 
 import archknife.annotation.*
+import archknife.util.ProcessorUtil.getLibraryPackage
 import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
 import java.io.IOException
@@ -14,16 +15,15 @@ import javax.tools.Diagnostic
 @AutoService(Processor::class)
 class MainProcessor : AbstractProcessor() {
 
-    var filer: Filer? = null
-    var messager: Messager? = null
-    var elements: Elements? = null
-    var fragmentModuleMap: HashMap<String, String>? = null
+    lateinit var filer: Filer
+    lateinit var messager: Messager
+    lateinit var elements: Elements
 
-    companion object {
-        var applicationClassName: ClassName? = null
-        var libraryPackage: String? = null
-        var appComponentPackage: String? = null
-    }
+    lateinit var applicationClassName: ClassName
+    lateinit var libraryPackage: String
+    lateinit var appComponentPackage: String
+
+    val fragmentModuleMap: HashMap<String, String> = HashMap()
 
     @Synchronized
     override fun init(processingEnvironment: ProcessingEnvironment) {
@@ -31,7 +31,6 @@ class MainProcessor : AbstractProcessor() {
         filer = processingEnvironment.filer
         messager = processingEnvironment.messager
         elements = processingEnvironment.elementUtils
-        fragmentModuleMap = HashMap()
     }
 
     override fun process(set: MutableSet<out TypeElement>, roundEnv: RoundEnvironment): Boolean {
@@ -45,7 +44,7 @@ class MainProcessor : AbstractProcessor() {
             ProvideViewModelProcessor().process(this, roundEnv)
 
             //AppComponent part - gathers all data from the other processors to build the dagger main file
-            AppComponentProcessor().process(this, roundEnv)
+            ComponentProcessor().process(this, roundEnv)
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -55,17 +54,17 @@ class MainProcessor : AbstractProcessor() {
     private fun prepareMainProcessor(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         roundEnv.getElementsAnnotatedWith(ProvideApplication::class.java).forEach {
             if (it.kind != ElementKind.CLASS) {
-                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
                         "applied to a class.")
                 return
             }
 
             val typeElement = it as TypeElement
-            libraryPackage = mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString() + ".di"
-            appComponentPackage = mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
-            applicationClassName = ClassName.get(
-                    mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString(),
-                    typeElement.simpleName.toString())
+            appComponentPackage = mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
+            libraryPackage = getLibraryPackage(appComponentPackage)
+            applicationClassName = ClassName.get(appComponentPackage, typeElement.simpleName.toString())
+
+            return@forEach
         }
     }
 

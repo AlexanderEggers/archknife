@@ -4,6 +4,7 @@ import archknife.MainProcessor
 import archknife.util.AnnotationProcessor
 import archknife.util.ProcessorUtil.classContributesAndroidInjector
 import archknife.util.ProcessorUtil.classModule
+import archknife.util.ProcessorUtil.generatedFragmentModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.*
@@ -21,7 +22,7 @@ class ProvideFragmentProcessor : AnnotationProcessor {
         activityFragmentMap.forEach {
             val activityName = it.key
             val elements: ArrayList<Element> = it.value
-            val fragmentModelName = "Generated_" + activityName + "Module"
+            val fragmentModelName = generatedFragmentModuleClassName(activityName)
 
             val fileBuilder = TypeSpec.classBuilder(fragmentModelName)
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
@@ -39,11 +40,11 @@ class ProvideFragmentProcessor : AnnotationProcessor {
             }
 
             val file = fileBuilder.build()
-            JavaFile.builder(MainProcessor.libraryPackage + ".fragment", file)
+            JavaFile.builder(mainProcessor.libraryPackage + ".fragment", file)
                     .build()
                     .writeTo(mainProcessor.filer)
 
-            mainProcessor.fragmentModuleMap!![activityName] = fragmentModelName
+            mainProcessor.fragmentModuleMap[activityName] = fragmentModelName
         }
     }
 
@@ -51,14 +52,14 @@ class ProvideFragmentProcessor : AnnotationProcessor {
     private fun prepareFragmentMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         roundEnv.getElementsAnnotatedWith(ProvideFragment::class.java).forEach { fragmentElement ->
             if (fragmentElement.kind != ElementKind.CLASS) {
-                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
                         "applied to a class.")
                 return
             }
 
             val typeElement = fragmentElement as TypeElement
             fragmentWithPackage[typeElement.simpleName.toString()] =
-                    mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
+                    mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
 
             fragmentElement.annotationMirrors.forEach {
                 it.elementValues.forEach {

@@ -9,6 +9,7 @@ import archknife.util.ProcessorUtil.classViewModel
 import archknife.util.ProcessorUtil.classViewModelFactory
 import archknife.util.ProcessorUtil.classViewModelKey
 import archknife.util.ProcessorUtil.classViewModelProviderFactory
+import archknife.util.ProcessorUtil.generatedViewModelBuilderModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.ElementKind
@@ -21,7 +22,7 @@ class ProvideViewModelProcessor : AnnotationProcessor {
     private val viewModelWithPackage: HashMap<String, String> = HashMap()
 
     override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        val fileBuilder = TypeSpec.classBuilder("Generated_ViewModelBuilderModule")
+        val fileBuilder = TypeSpec.classBuilder(generatedViewModelBuilderModuleClassName())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(classModule)
 
@@ -29,7 +30,7 @@ class ProvideViewModelProcessor : AnnotationProcessor {
         generateViewModelProviderMethods(fileBuilder)
 
         val file = fileBuilder.build()
-        JavaFile.builder(MainProcessor.libraryPackage, file)
+        JavaFile.builder(mainProcessor.libraryPackage, file)
                 .build()
                 .writeTo(mainProcessor.filer)
     }
@@ -37,14 +38,14 @@ class ProvideViewModelProcessor : AnnotationProcessor {
     private fun prepareViewModelPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java).forEach {
             if (it.kind != ElementKind.CLASS) {
-                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
                         "applied to a class.")
                 return
             }
 
             val typeElement = it as TypeElement
             viewModelWithPackage[typeElement.simpleName.toString()] =
-                    mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
+                    mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
         }
     }
 

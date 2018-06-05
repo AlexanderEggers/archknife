@@ -5,6 +5,7 @@ import archknife.util.AnnotationProcessor
 import archknife.util.ProcessorUtil.classContributesAndroidInjector
 import archknife.util.ProcessorUtil.classEmptyFragmentModule
 import archknife.util.ProcessorUtil.classModule
+import archknife.util.ProcessorUtil.generatedActivityBuilderModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.ElementKind
@@ -17,7 +18,7 @@ class ProvideActivityProcessor : AnnotationProcessor {
     private val activitiesWithPackage: HashMap<String, String> = HashMap()
 
     override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        val fileBuilder = TypeSpec.classBuilder("Generated_ActivityBuilderModule")
+        val fileBuilder = TypeSpec.classBuilder(generatedActivityBuilderModuleClassName())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(classModule)
 
@@ -25,33 +26,32 @@ class ProvideActivityProcessor : AnnotationProcessor {
         generateActivityProviderMethods(fileBuilder, mainProcessor)
 
         val file = fileBuilder.build()
-        JavaFile.builder(MainProcessor.libraryPackage, file)
+        JavaFile.builder(mainProcessor.libraryPackage, file)
                 .build()
                 .writeTo(mainProcessor.filer)
     }
 
-    @Suppress("LABEL_NAME_CLASH")
     private fun prepareActivityPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java).forEach {
             if (it.kind != ElementKind.CLASS) {
-                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
                         "applied to a class.")
                 return
             }
 
             val typeElement = it as TypeElement
             activitiesWithPackage[typeElement.simpleName.toString()] =
-                    mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
+                    mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
         }
     }
 
     private fun generateActivityProviderMethods(fileBuilder: TypeSpec.Builder, mainProcessor: MainProcessor) {
         activitiesWithPackage.forEach { activityName, packageName ->
             val activityClass = ClassName.get(packageName, activityName)
-            val fragmentModuleName = mainProcessor.fragmentModuleMap!![activityName]
+            val fragmentModuleName = mainProcessor.fragmentModuleMap[activityName]
 
             val classFragmentModule = if (fragmentModuleName != null) {
-                ClassName.get(MainProcessor.libraryPackage + ".fragment", fragmentModuleName)
+                ClassName.get(mainProcessor.libraryPackage + ".fragment", fragmentModuleName)
             } else {
                 classEmptyFragmentModule
             }

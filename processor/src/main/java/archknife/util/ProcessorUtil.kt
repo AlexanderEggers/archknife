@@ -7,6 +7,7 @@ object ProcessorUtil {
     val classViewModelFactory: ClassName = ClassName.get("archknife.viewmodel", "ViewModelFactory")
     val classViewModelKey: ClassName = ClassName.get("archknife.viewmodel", "ViewModelKey")
     val classEmptyFragmentModule: ClassName = ClassName.get("archknife.fragment", "EmptyFragmentModule")
+    val classContextModule: ClassName = ClassName.get("archknife.context", "ContextModule")
 
     val classViewModelProviderFactory: ClassName = ClassName.get("android.arch.lifecycle.ViewModelProvider", "Factory")
     val classViewModel: ClassName = ClassName.get("android.arch.lifecycle", "ViewModel")
@@ -21,4 +22,13 @@ object ProcessorUtil {
     val classContributesAndroidInjector: ClassName = ClassName.get("dagger.android", "ContributesAndroidInjector")
     val classBinds: ClassName = ClassName.get("dagger", "Binds")
     val classIntoMap: ClassName = ClassName.get("dagger.multibindings", "IntoMap")
+
+    fun generatedViewModelBuilderModuleClassName(): String = "Generated_ViewModelBuilderModule"
+    fun generatedFragmentModuleClassName(activityName: String): String = "Generated_" + activityName + "Module"
+    fun generatedActivityBuilderModuleClassName(): String = "Generated_ActivityBuilderModule"
+    fun generatedComponentClassName(): String = "ArchknifeComponent"
+
+    fun getLibraryPackage(basePackage: String): String {
+        return "$basePackage.di"
+    }
 }

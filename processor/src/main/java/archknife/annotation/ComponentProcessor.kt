@@ -7,7 +7,11 @@ import archknife.util.ProcessorUtil.classApplication
 import archknife.util.ProcessorUtil.classBindsInstance
 import archknife.util.ProcessorUtil.classComponent
 import archknife.util.ProcessorUtil.classComponentBuilder
+import archknife.util.ProcessorUtil.classContextModule
 import archknife.util.ProcessorUtil.classSingleton
+import archknife.util.ProcessorUtil.generatedActivityBuilderModuleClassName
+import archknife.util.ProcessorUtil.generatedComponentClassName
+import archknife.util.ProcessorUtil.generatedViewModelBuilderModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.ElementKind
@@ -15,19 +19,22 @@ import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 import javax.tools.Diagnostic
 
-class AppComponentProcessor : AnnotationProcessor {
+class ComponentProcessor : AnnotationProcessor {
 
-    private var classActivityBuilder = ClassName.get(MainProcessor.libraryPackage, "Generated_ActivityBuilderModule")
-    private var classViewModelBuilder = ClassName.get(MainProcessor.libraryPackage, "Generated_ViewModelBuilderModule")
-
-    private var classContextModule = ClassName.get("archknife.context", "ContextModule")
+    private lateinit var classActivityBuilder: ClassName
+    private lateinit var classViewModelBuilder: ClassName
 
     private val modulesWithPackage: HashMap<String, String> = HashMap()
 
     override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
+        classActivityBuilder = ClassName.get(mainProcessor.libraryPackage, generatedActivityBuilderModuleClassName())
+        classViewModelBuilder = ClassName.get(mainProcessor.libraryPackage, generatedViewModelBuilderModuleClassName())
+
         prepareModulesPackageMap(mainProcessor, roundEnv)
 
-        val fileBuilder = TypeSpec.interfaceBuilder("ArchknifeComponent")
+        val componentName = generatedComponentClassName()
+
+        val fileBuilder = TypeSpec.interfaceBuilder(componentName)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(classSingleton)
                 .addAnnotation(AnnotationSpec.builder(classComponent)
@@ -41,23 +48,23 @@ class AppComponentProcessor : AnnotationProcessor {
                                 .addAnnotation(classBindsInstance)
                                 .addParameter(classApplication, "application")
                                 .returns(ClassName.get(
-                                        MainProcessor.appComponentPackage + ".ArchknifeComponent",
+                                        mainProcessor.appComponentPackage + ".$componentName",
                                         "Builder"
                                 ))
                                 .build())
                         .addMethod(MethodSpec.methodBuilder("build")
                                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                                .returns(ClassName.get(MainProcessor.appComponentPackage,
-                                        "ArchknifeComponent"))
+                                .returns(ClassName.get(mainProcessor.appComponentPackage,
+                                        componentName))
                                 .build())
                         .build())
                 .addMethod(MethodSpec.methodBuilder("inject")
                         .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                        .addParameter(MainProcessor.applicationClassName, "application")
+                        .addParameter(mainProcessor.applicationClassName, "application")
                         .build())
 
         val file = fileBuilder.build()
-        JavaFile.builder(MainProcessor.appComponentPackage, file)
+        JavaFile.builder(mainProcessor.appComponentPackage, file)
                 .build()
                 .writeTo(mainProcessor.filer)
     }
@@ -65,14 +72,14 @@ class AppComponentProcessor : AnnotationProcessor {
     private fun prepareModulesPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         roundEnv.getElementsAnnotatedWith(ProvideModule::class.java).forEach {
             if (it.kind != ElementKind.CLASS) {
-                mainProcessor.messager!!.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
                         "applied to a class.")
                 return
             }
 
             val typeElement = it as TypeElement
             modulesWithPackage[typeElement.simpleName.toString()] =
-                    mainProcessor.elements!!.getPackageOf(typeElement).qualifiedName.toString()
+                    mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
         }
     }
 
