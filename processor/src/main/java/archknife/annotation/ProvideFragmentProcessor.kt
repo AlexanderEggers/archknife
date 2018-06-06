@@ -52,7 +52,7 @@ class ProvideFragmentProcessor {
         for (fragmentElement in roundEnv.getElementsAnnotatedWith(ProvideFragment::class.java)) {
             if (!fragmentElement.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class. Error for class: ${fragmentElement.simpleName}")
+                        "applied to a class. Error inside ${fragmentElement.simpleName}")
                 continue
             }
 

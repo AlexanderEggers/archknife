@@ -37,7 +37,7 @@ class ProvideViewModelProcessor {
         for (it in roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java)) {
             if (it.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class. Error for class: ${it.simpleName}")
+                        "applied to a class. Error inside ${it.simpleName}")
                 continue
             }
 
