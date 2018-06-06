@@ -55,7 +55,7 @@ class MainProcessor : AbstractProcessor() {
         roundEnv.getElementsAnnotatedWith(ProvideApplication::class.java).forEach {
             if (it.kind != ElementKind.CLASS) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class.")
+                        "applied to a class. Error for ${it.simpleName}")
                 return
             }
 

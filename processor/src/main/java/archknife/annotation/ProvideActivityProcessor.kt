@@ -33,7 +33,7 @@ class ProvideActivityProcessor {
         for (it in roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java)) {
             if (!it.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class. Error inside ${it.simpleName}")
+                        "applied to a class. Error for ${it.simpleName}")
                 continue
             }
 
