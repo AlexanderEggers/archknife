@@ -46,7 +46,7 @@ class MainProcessor : AbstractProcessor() {
             //AppComponent part - gathers all data from the other processors to build the dagger main file
             ComponentProcessor().process(this, roundEnv)
         } catch (e: IOException) {
-            e.printStackTrace()
+            messager.printMessage(Diagnostic.Kind.ERROR, "Something went wrong: ${e.message}")
         }
         return true
     }
