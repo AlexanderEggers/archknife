@@ -1,27 +1,25 @@
 package archknife.annotation
 
 import archknife.MainProcessor
-import archknife.util.AnnotationProcessor
-import archknife.util.ProcessorUtil.classBinds
-import archknife.util.ProcessorUtil.classIntoMap
-import archknife.util.ProcessorUtil.classModule
-import archknife.util.ProcessorUtil.classViewModel
-import archknife.util.ProcessorUtil.classViewModelFactory
-import archknife.util.ProcessorUtil.classViewModelKey
-import archknife.util.ProcessorUtil.classViewModelProviderFactory
-import archknife.util.ProcessorUtil.generatedViewModelBuilderModuleClassName
+import archknife.ProcessorUtil.classBinds
+import archknife.ProcessorUtil.classIntoMap
+import archknife.ProcessorUtil.classModule
+import archknife.ProcessorUtil.classViewModel
+import archknife.ProcessorUtil.classViewModelFactory
+import archknife.ProcessorUtil.classViewModelKey
+import archknife.ProcessorUtil.classViewModelProviderFactory
+import archknife.ProcessorUtil.generatedViewModelBuilderModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
-import javax.lang.model.element.ElementKind
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 import javax.tools.Diagnostic
 
-class ProvideViewModelProcessor : AnnotationProcessor {
+class ProvideViewModelProcessor {
 
     private val viewModelWithPackage: HashMap<String, String> = HashMap()
 
-    override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
+    fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         val fileBuilder = TypeSpec.classBuilder(generatedViewModelBuilderModuleClassName())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(classModule)
@@ -36,11 +34,11 @@ class ProvideViewModelProcessor : AnnotationProcessor {
     }
 
     private fun prepareViewModelPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java).forEach {
-            if (it.kind != ElementKind.CLASS) {
+        for (it in roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java)) {
+            if (it.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class.")
-                return
+                        "applied to a class. Error for class: ${it.simpleName}")
+                continue
             }
 
             val typeElement = it as TypeElement

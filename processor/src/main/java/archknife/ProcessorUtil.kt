@@ -1,4 +1,4 @@
-package archknife.util
+package archknife
 
 import com.squareup.javapoet.ClassName
 

@@ -1,22 +1,21 @@
 package archknife.annotation
 
 import archknife.MainProcessor
-import archknife.util.AnnotationProcessor
-import archknife.util.ProcessorUtil.classContributesAndroidInjector
-import archknife.util.ProcessorUtil.classModule
-import archknife.util.ProcessorUtil.generatedFragmentModuleClassName
+import archknife.ProcessorUtil.classContributesAndroidInjector
+import archknife.ProcessorUtil.classModule
+import archknife.ProcessorUtil.generatedFragmentModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.*
 import javax.lang.model.type.DeclaredType
 import javax.tools.Diagnostic
 
-class ProvideFragmentProcessor : AnnotationProcessor {
+class ProvideFragmentProcessor {
 
     private var activityFragmentMap: HashMap<String, ArrayList<Element>> = HashMap()
     private val fragmentWithPackage: HashMap<String, String> = HashMap()
 
-    override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
+    fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         prepareFragmentMap(mainProcessor, roundEnv)
 
         activityFragmentMap.forEach {
@@ -50,11 +49,11 @@ class ProvideFragmentProcessor : AnnotationProcessor {
 
     @Suppress("LABEL_NAME_CLASH", "UNCHECKED_CAST")
     private fun prepareFragmentMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        roundEnv.getElementsAnnotatedWith(ProvideFragment::class.java).forEach { fragmentElement ->
-            if (fragmentElement.kind != ElementKind.CLASS) {
+        for (fragmentElement in roundEnv.getElementsAnnotatedWith(ProvideFragment::class.java)) {
+            if (!fragmentElement.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class.")
-                return
+                        "applied to a class. Error for class: ${fragmentElement.simpleName}")
+                continue
             }
 
             val typeElement = fragmentElement as TypeElement
@@ -73,14 +72,11 @@ class ProvideFragmentProcessor : AnnotationProcessor {
                             val objectActivity = declaredType.asElement()
                             val activityName = objectActivity.simpleName.toString()
 
-                            var elements = activityFragmentMap[activityName]
-                            if (elements == null) {
-                                elements = ArrayList()
-                            }
-
+                            val elements = activityFragmentMap[activityName] ?: ArrayList()
                             elements.add(fragmentElement)
                             activityFragmentMap[activityName] = elements
                         }
+
                         return@forEach
                     }
                 }

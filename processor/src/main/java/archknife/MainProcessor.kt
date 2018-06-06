@@ -1,7 +1,7 @@
 package archknife
 
 import archknife.annotation.*
-import archknife.util.ProcessorUtil.getLibraryPackage
+import archknife.ProcessorUtil.getLibraryPackage
 import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
 import java.io.IOException

@@ -1,32 +1,30 @@
 package archknife.annotation
 
 import archknife.MainProcessor
-import archknife.util.AnnotationProcessor
-import archknife.util.ProcessorUtil.classAndroidInjectionModule
-import archknife.util.ProcessorUtil.classApplication
-import archknife.util.ProcessorUtil.classBindsInstance
-import archknife.util.ProcessorUtil.classComponent
-import archknife.util.ProcessorUtil.classComponentBuilder
-import archknife.util.ProcessorUtil.classContextModule
-import archknife.util.ProcessorUtil.classSingleton
-import archknife.util.ProcessorUtil.generatedActivityBuilderModuleClassName
-import archknife.util.ProcessorUtil.generatedComponentClassName
-import archknife.util.ProcessorUtil.generatedViewModelBuilderModuleClassName
+import archknife.ProcessorUtil.classAndroidInjectionModule
+import archknife.ProcessorUtil.classApplication
+import archknife.ProcessorUtil.classBindsInstance
+import archknife.ProcessorUtil.classComponent
+import archknife.ProcessorUtil.classComponentBuilder
+import archknife.ProcessorUtil.classContextModule
+import archknife.ProcessorUtil.classSingleton
+import archknife.ProcessorUtil.generatedActivityBuilderModuleClassName
+import archknife.ProcessorUtil.generatedComponentClassName
+import archknife.ProcessorUtil.generatedViewModelBuilderModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
-import javax.lang.model.element.ElementKind
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 import javax.tools.Diagnostic
 
-class ComponentProcessor : AnnotationProcessor {
+class ComponentProcessor {
 
     private lateinit var classActivityBuilder: ClassName
     private lateinit var classViewModelBuilder: ClassName
 
     private val modulesWithPackage: HashMap<String, String> = HashMap()
 
-    override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
+    fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         classActivityBuilder = ClassName.get(mainProcessor.libraryPackage, generatedActivityBuilderModuleClassName())
         classViewModelBuilder = ClassName.get(mainProcessor.libraryPackage, generatedViewModelBuilderModuleClassName())
 
@@ -70,11 +68,11 @@ class ComponentProcessor : AnnotationProcessor {
     }
 
     private fun prepareModulesPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        roundEnv.getElementsAnnotatedWith(ProvideModule::class.java).forEach {
-            if (it.kind != ElementKind.CLASS) {
+        for (it in roundEnv.getElementsAnnotatedWith(ProvideModule::class.java)) {
+            if (!it.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class.")
-                return
+                        "applied to a class. Error for class: ${it.simpleName}")
+                continue
             }
 
             val typeElement = it as TypeElement

@@ -1,23 +1,21 @@
 package archknife.annotation
 
 import archknife.MainProcessor
-import archknife.util.AnnotationProcessor
-import archknife.util.ProcessorUtil.classContributesAndroidInjector
-import archknife.util.ProcessorUtil.classEmptyFragmentModule
-import archknife.util.ProcessorUtil.classModule
-import archknife.util.ProcessorUtil.generatedActivityBuilderModuleClassName
+import archknife.ProcessorUtil.classContributesAndroidInjector
+import archknife.ProcessorUtil.classEmptyFragmentModule
+import archknife.ProcessorUtil.classModule
+import archknife.ProcessorUtil.generatedActivityBuilderModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
-import javax.lang.model.element.ElementKind
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
 import javax.tools.Diagnostic
 
-class ProvideActivityProcessor : AnnotationProcessor {
+class ProvideActivityProcessor {
 
     private val activitiesWithPackage: HashMap<String, String> = HashMap()
 
-    override fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
+    fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         val fileBuilder = TypeSpec.classBuilder(generatedActivityBuilderModuleClassName())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(classModule)
@@ -32,11 +30,11 @@ class ProvideActivityProcessor : AnnotationProcessor {
     }
 
     private fun prepareActivityPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java).forEach {
-            if (it.kind != ElementKind.CLASS) {
+        for (it in roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java)) {
+            if (!it.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class.")
-                return
+                        "applied to a class. Error for class: ${it.simpleName}")
+                continue
             }
 
             val typeElement = it as TypeElement
