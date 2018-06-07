@@ -6,7 +6,10 @@ import archknife.ProcessorUtil.classModule
 import archknife.ProcessorUtil.generatedFragmentModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
-import javax.lang.model.element.*
+import javax.lang.model.element.AnnotationValue
+import javax.lang.model.element.Element
+import javax.lang.model.element.Modifier
+import javax.lang.model.element.TypeElement
 import javax.lang.model.type.DeclaredType
 import javax.tools.Diagnostic
 
@@ -60,27 +63,36 @@ class ProvideFragmentProcessor {
             fragmentWithPackage[typeElement.simpleName.toString()] =
                     mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
 
-            fragmentElement.annotationMirrors.forEach {
-                it.elementValues.forEach {
-                    val key = it.key.simpleName.toString()
-                    val value = it.value.value
+            getActivityNames(fragmentElement).forEach { name ->
+                val elements = activityFragmentMap[name] ?: ArrayList()
+                elements.add(fragmentElement)
+                activityFragmentMap[name] = elements
+            }
+        }
+    }
 
-                    if (key == "activityClasses") {
-                        val typeMirrors = value as List<AnnotationValue>
-                        typeMirrors.forEach {
-                            val declaredType = it.value as DeclaredType
-                            val objectActivity = declaredType.asElement()
-                            val activityName = objectActivity.simpleName.toString()
+    @Suppress("UNCHECKED_CAST")
+    private fun getActivityNames(fragmentElement: Element): List<String> {
+        fragmentElement.annotationMirrors.forEach { classAnnotations ->
+            classAnnotations.elementValues.forEach { classAnnotationFields ->
+                val key = classAnnotationFields.key.simpleName.toString()
+                val value = classAnnotationFields.value.value
 
-                            val elements = activityFragmentMap[activityName] ?: ArrayList()
-                            elements.add(fragmentElement)
-                            activityFragmentMap[activityName] = elements
-                        }
+                if (key == "activityClasses") {
+                    val activityNameList = ArrayList<String>()
 
-                        return@forEach
+                    val typeMirrors = value as List<AnnotationValue>
+                    typeMirrors.forEach { annotationValue ->
+                        val declaredType = annotationValue.value as DeclaredType
+                        val objectActivity = declaredType.asElement()
+                        val activityName = objectActivity.simpleName.toString()
+                        activityNameList.add(activityName)
                     }
+
+                    return activityNameList
                 }
             }
         }
+        return emptyList()
     }
 }

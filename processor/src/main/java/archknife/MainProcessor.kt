@@ -1,7 +1,7 @@
 package archknife
 
-import archknife.annotation.*
 import archknife.ProcessorUtil.getLibraryPackage
+import archknife.annotation.*
 import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
 import java.io.IOException
@@ -16,12 +16,18 @@ import javax.tools.Diagnostic
 class MainProcessor : AbstractProcessor() {
 
     lateinit var filer: Filer
+        private set
     lateinit var messager: Messager
+        private set
     lateinit var elements: Elements
+        private set
 
     lateinit var applicationClassName: ClassName
+        private set
     lateinit var libraryPackage: String
+        private set
     lateinit var appComponentPackage: String
+        private set
 
     val fragmentModuleMap: HashMap<String, String> = HashMap()
 

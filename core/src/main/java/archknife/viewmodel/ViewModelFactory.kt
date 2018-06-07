@@ -28,9 +28,11 @@ constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcard
                 }
             }
         }
+
         if (creator == null) {
             throw IllegalArgumentException("unknown model class $modelClass")
         }
+
         try {
             return creator.get() as T
         } catch (e: Exception) {

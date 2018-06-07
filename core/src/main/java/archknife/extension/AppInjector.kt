@@ -72,6 +72,8 @@ open class AppInjector
      * need an activity context.
      *
      * @param activity an Activity object
+     *
+     * @since 1.0.0
      */
     protected open fun setContext(activity: Activity) {
         contextProvider.context = activity

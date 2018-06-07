@@ -34,14 +34,14 @@ class ProvideViewModelProcessor {
     }
 
     private fun prepareViewModelPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        for (it in roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java)) {
-            if (it.kind.isClass) {
+        for (viewModelElement in roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java)) {
+            if (viewModelElement.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class. Error for ${it.simpleName}")
+                        "applied to a class. Error for ${viewModelElement.simpleName}")
                 continue
             }
 
-            val typeElement = it as TypeElement
+            val typeElement = viewModelElement as TypeElement
             viewModelWithPackage[typeElement.simpleName.toString()] =
                     mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
         }

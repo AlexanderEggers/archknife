@@ -30,14 +30,14 @@ class ProvideActivityProcessor {
     }
 
     private fun prepareActivityPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        for (it in roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java)) {
-            if (!it.kind.isClass) {
+        for (activityElement in roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java)) {
+            if (!activityElement.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class. Error for ${it.simpleName}")
+                        "applied to a class. Error for ${activityElement.simpleName}")
                 continue
             }
 
-            val typeElement = it as TypeElement
+            val typeElement = activityElement as TypeElement
             activitiesWithPackage[typeElement.simpleName.toString()] =
                     mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
         }

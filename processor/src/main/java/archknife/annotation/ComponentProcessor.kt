@@ -68,14 +68,14 @@ class ComponentProcessor {
     }
 
     private fun prepareModulesPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        for (it in roundEnv.getElementsAnnotatedWith(ProvideModule::class.java)) {
-            if (!it.kind.isClass) {
+        for (moduleElement in roundEnv.getElementsAnnotatedWith(ProvideModule::class.java)) {
+            if (!moduleElement.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class. Error for ${it.simpleName}")
+                        "applied to a class. Error for ${moduleElement.simpleName}")
                 continue
             }
 
-            val typeElement = it as TypeElement
+            val typeElement = moduleElement as TypeElement
             modulesWithPackage[typeElement.simpleName.toString()] =
                     mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
         }
