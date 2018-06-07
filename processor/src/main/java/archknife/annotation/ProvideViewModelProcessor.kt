@@ -35,7 +35,7 @@ class ProvideViewModelProcessor {
 
     private fun prepareViewModelPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         for (viewModelElement in roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java)) {
-            if (viewModelElement.kind.isClass) {
+            if (!viewModelElement.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
                         "applied to a class. Error for ${viewModelElement.simpleName}")
                 continue

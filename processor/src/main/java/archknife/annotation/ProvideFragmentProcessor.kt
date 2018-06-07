@@ -50,7 +50,6 @@ class ProvideFragmentProcessor {
         }
     }
 
-    @Suppress("LABEL_NAME_CLASH", "UNCHECKED_CAST")
     private fun prepareFragmentMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
         for (fragmentElement in roundEnv.getElementsAnnotatedWith(ProvideFragment::class.java)) {
             if (!fragmentElement.kind.isClass) {

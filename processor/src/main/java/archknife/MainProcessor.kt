@@ -7,7 +7,6 @@ import com.squareup.javapoet.ClassName
 import java.io.IOException
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
-import javax.lang.model.element.ElementKind
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 import javax.tools.Diagnostic
@@ -58,19 +57,19 @@ class MainProcessor : AbstractProcessor() {
     }
 
     private fun prepareMainProcessor(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        roundEnv.getElementsAnnotatedWith(ProvideApplication::class.java).forEach {
-            if (it.kind != ElementKind.CLASS) {
+        for (applicationElement in roundEnv.getElementsAnnotatedWith(ProvideApplication::class.java)) {
+            if (!applicationElement.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class. Error for ${it.simpleName}")
-                return
+                        "applied to a class. Error for ${applicationElement.simpleName}")
+                continue
             }
 
-            val typeElement = it as TypeElement
+            val typeElement = applicationElement as TypeElement
             appComponentPackage = mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
             libraryPackage = getLibraryPackage(appComponentPackage)
             applicationClassName = ClassName.get(appComponentPackage, typeElement.simpleName.toString())
 
-            return@forEach
+            break
         }
     }
 
