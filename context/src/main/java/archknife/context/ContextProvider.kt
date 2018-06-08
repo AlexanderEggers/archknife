@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference
 object ContextProvider {
 
     private var contextRef: WeakReference<Context?> = WeakReference(null)
-    private val listenerList: ArrayList<ContextChangedListener> = ArrayList()
+    private val listenerList: ArrayList<OnContextChangedListener> = ArrayList()
 
     var context: Context?
         /**
@@ -44,7 +44,7 @@ object ContextProvider {
         return contextRef.get() as T?
     }
 
-    fun addListener(listener: ContextChangedListener) {
+    fun addListener(listener: OnContextChangedListener) {
         listenerList.add(listener)
     }
 }

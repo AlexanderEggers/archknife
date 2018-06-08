@@ -1,5 +1,5 @@
 package archknife.context
 
-interface ContextChangedListener {
+interface OnContextChangedListener {
     fun onChanged()
 }
