@@ -12,6 +12,7 @@ import java.lang.ref.WeakReference
 object ContextProvider {
 
     private var contextRef: WeakReference<Context?> = WeakReference(null)
+    private val listenerList: ArrayList<ContextChangedListener> = ArrayList()
 
     var context: Context?
         /**
@@ -21,6 +22,10 @@ object ContextProvider {
          */
         set(context) {
             contextRef = WeakReference(context)
+
+            listenerList.forEach {
+                it.onChanged()
+            }
         }
         /**
          * Returns the current context object.
@@ -37,5 +42,9 @@ object ContextProvider {
     @Suppress("UNCHECKED_CAST")
     fun <T : Activity> getActivity(): T? {
         return contextRef.get() as T?
+    }
+
+    fun addListener(listener: ContextChangedListener) {
+        listenerList.add(listener)
     }
 }
