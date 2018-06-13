@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-  //includes all library artifacts
+  //includes all library artifacts including several helper classes
   implementation 'org.archknife:archknife-core:0.5.0'
   //just annotations
   implementation 'org.archknife:archknife-annotation:0.5.0'
