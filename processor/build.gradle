@@ -40,6 +40,9 @@ dependencies {
 
     implementation "com.google.auto.service:auto-service:$autoservice_version"
     kapt "com.google.auto.service:auto-service:$autoservice_version"
+
+    implementation "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation "com.google.dagger:dagger-android-processor:$dagger_version"
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
