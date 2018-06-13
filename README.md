@@ -33,7 +33,7 @@ Archknife has five different annotation types.
 
 1. @ProvideApplication
 
-Like "normal" Dagger-2 implementations, this one also requires you to create an application class. This class needs to be declared inside your manifest in order work. This library provides you with a base application class that includes most of the required Dagger-2 implementation. Simply extend your class with the ArchknifeApplication.
+Like "normal" Dagger-2 implementations, this one also requires you to create an application class. This class needs to be declared inside your manifest in order work. This library provides you with a base application class that includes most of the required Dagger-2 implementation. Simply extend your class with the ArchknifeApplication. In case you want to add your custom AppInjector class to the default dagger initialisation, you can use the ArchknifeApplicationGen class which requires an AppInjector class as a generic type. The AppInjector is responsible in handling the application (activity/fragment) and dagger lifecycle.
 
 ```kotlin
 @ProvideApplication
