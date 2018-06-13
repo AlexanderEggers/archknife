@@ -12,62 +12,56 @@ import archknife.ProcessorUtil.generatedViewModelBuilderModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.Modifier
-import javax.lang.model.element.TypeElement
 import javax.tools.Diagnostic
 
 class ProvideViewModelProcessor {
 
-    private val viewModelWithPackage: HashMap<String, String> = HashMap()
-
     fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        val fileBuilder = TypeSpec.classBuilder(generatedViewModelBuilderModuleClassName())
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                .addAnnotation(classModule)
+        TypeSpec.classBuilder(generatedViewModelBuilderModuleClassName()).apply {
+            addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+            addAnnotation(classModule)
 
-        prepareViewModelPackageMap(mainProcessor, roundEnv)
-        generateViewModelProviderMethods(fileBuilder)
-
-        val file = fileBuilder.build()
-        JavaFile.builder(mainProcessor.libraryPackage, file)
-                .build()
-                .writeTo(mainProcessor.filer)
-    }
-
-    private fun prepareViewModelPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        for (viewModelElement in roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java)) {
-            if (!viewModelElement.kind.isClass) {
-                mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class. Error for ${viewModelElement.simpleName}")
-                continue
+            generateViewModelProviderMethods(mainProcessor, roundEnv).forEach {
+                addMethod(it)
             }
 
-            val typeElement = viewModelElement as TypeElement
-            viewModelWithPackage[typeElement.simpleName.toString()] =
-                    mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
+            addMethod(MethodSpec.methodBuilder("bindViewModelFactory").apply {
+                addModifiers(Modifier.ABSTRACT)
+                addAnnotation(classBinds)
+                addParameter(classViewModelFactory, "factory")
+                returns(classViewModelProviderFactory)
+            }.build())
+        }.build().also { file ->
+            JavaFile.builder(mainProcessor.libraryPackage, file)
+                    .build()
+                    .writeTo(mainProcessor.filer)
         }
     }
 
-    private fun generateViewModelProviderMethods(fileBuilder: TypeSpec.Builder) {
-        viewModelWithPackage.forEach { viewModelName, packageName ->
-            val classViewModelImpl = ClassName.get(packageName, viewModelName)
+    private fun generateViewModelProviderMethods(mainProcessor: MainProcessor, roundEnv: RoundEnvironment): List<MethodSpec> {
+        return ArrayList<MethodSpec>().apply {
+            roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java).map {
+                if (!it.kind.isClass) {
+                    mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR,
+                            "@ProvideViewModel can be only be applied to a class. " +
+                                    "Error for ${it.simpleName}")
+                }
 
-            fileBuilder.addMethod(MethodSpec.methodBuilder("bind$viewModelName")
-                    .addModifiers(Modifier.ABSTRACT)
-                    .addAnnotation(classBinds)
-                    .addAnnotation(classIntoMap)
-                    .addAnnotation(AnnotationSpec.builder(classViewModelKey)
-                            .addMember("value", "$classViewModelImpl.class")
-                            .build())
-                    .addParameter(classViewModelImpl, "viewModel")
-                    .returns(classViewModel)
-                    .build())
+                val viewModelName = it.simpleName.toString()
+                val packageName = mainProcessor.elements.getPackageOf(it).qualifiedName.toString()
+                val classViewModelImpl = ClassName.get(packageName, viewModelName)
+
+                MethodSpec.methodBuilder("bind$viewModelName").apply {
+                    addModifiers(Modifier.ABSTRACT)
+                    addAnnotation(classBinds)
+                    addAnnotation(classIntoMap)
+                    addAnnotation(AnnotationSpec.builder(classViewModelKey).apply {
+                        addMember("value", "$classViewModelImpl.class")
+                    }.build())
+                    addParameter(classViewModelImpl, "viewModel")
+                    returns(classViewModel)
+                }.build()
+            }
         }
-
-        fileBuilder.addMethod(MethodSpec.methodBuilder("bindViewModelFactory")
-                .addModifiers(Modifier.ABSTRACT)
-                .addAnnotation(classBinds)
-                .addParameter(classViewModelFactory, "factory")
-                .returns(classViewModelProviderFactory)
-                .build())
     }
 }

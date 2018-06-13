@@ -14,81 +14,62 @@ import archknife.ProcessorUtil.generatedViewModelBuilderModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.Modifier
-import javax.lang.model.element.TypeElement
 import javax.tools.Diagnostic
 
 class ComponentProcessor {
 
-    private lateinit var classActivityBuilder: ClassName
-    private lateinit var classViewModelBuilder: ClassName
-
-    private val modulesWithPackage: HashMap<String, String> = HashMap()
-
     fun process(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        classActivityBuilder = ClassName.get(mainProcessor.libraryPackage, generatedActivityBuilderModuleClassName())
-        classViewModelBuilder = ClassName.get(mainProcessor.libraryPackage, generatedViewModelBuilderModuleClassName())
-
-        prepareModulesPackageMap(mainProcessor, roundEnv)
-
-        val componentName = generatedComponentClassName()
-
-        val fileBuilder = TypeSpec.interfaceBuilder(componentName)
-                .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(classSingleton)
-                .addAnnotation(AnnotationSpec.builder(classComponent)
-                        .addMember("modules", createComponentAnnotationFormat())
-                        .build())
-                .addType(TypeSpec.interfaceBuilder("Builder")
-                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                        .addAnnotation(classComponentBuilder)
-                        .addMethod(MethodSpec.methodBuilder("application")
-                                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                                .addAnnotation(classBindsInstance)
-                                .addParameter(classApplication, "application")
-                                .returns(ClassName.get(
-                                        mainProcessor.appComponentPackage + ".$componentName",
-                                        "Builder"
-                                ))
-                                .build())
-                        .addMethod(MethodSpec.methodBuilder("build")
-                                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                                .returns(ClassName.get(mainProcessor.appComponentPackage,
-                                        componentName))
-                                .build())
-                        .build())
-                .addMethod(MethodSpec.methodBuilder("inject")
-                        .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                        .addParameter(mainProcessor.applicationClassName, "application")
-                        .build())
-
-        val file = fileBuilder.build()
-        JavaFile.builder(mainProcessor.appComponentPackage, file)
-                .build()
-                .writeTo(mainProcessor.filer)
-    }
-
-    private fun prepareModulesPackageMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
-        for (moduleElement in roundEnv.getElementsAnnotatedWith(ProvideModule::class.java)) {
-            if (!moduleElement.kind.isClass) {
-                mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
-                        "applied to a class. Error for ${moduleElement.simpleName}")
-                continue
-            }
-
-            val typeElement = moduleElement as TypeElement
-            modulesWithPackage[typeElement.simpleName.toString()] =
-                    mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
+        TypeSpec.interfaceBuilder(generatedComponentClassName()).apply {
+            addModifiers(Modifier.PUBLIC)
+            addAnnotation(classSingleton)
+            addAnnotation(AnnotationSpec.builder(classComponent).apply {
+                addMember("modules", createComponentAnnotationFormat(mainProcessor, roundEnv))
+            }.build())
+            addType(TypeSpec.interfaceBuilder("Builder").apply {
+                addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                addAnnotation(classComponentBuilder)
+                addMethod(MethodSpec.methodBuilder("application").apply {
+                    addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                    addAnnotation(classBindsInstance)
+                    addParameter(classApplication, "application")
+                    returns(ClassName.get(
+                            mainProcessor.appComponentPackage + ".${generatedComponentClassName()}",
+                            "Builder"
+                    ))
+                }.build())
+                addMethod(MethodSpec.methodBuilder("build").apply {
+                    addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                    returns(ClassName.get(mainProcessor.appComponentPackage, generatedComponentClassName()))
+                }.build())
+            }.build())
+            addMethod(MethodSpec.methodBuilder("inject").apply {
+                addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                addParameter(mainProcessor.applicationClassName, "application")
+            }.build())
+        }.build().also { file ->
+            JavaFile.builder(mainProcessor.appComponentPackage, file)
+                    .build()
+                    .writeTo(mainProcessor.filer)
         }
     }
 
-    private fun createComponentAnnotationFormat(): String {
-        var format = "{$classAndroidInjectionModule.class, $classActivityBuilder.class, " +
-                "$classViewModelBuilder.class, $classContextModule.class"
+    private fun createComponentAnnotationFormat(mainProcessor: MainProcessor, roundEnv: RoundEnvironment): String {
+        val classActivityBuilder = ClassName.get(mainProcessor.libraryPackage, generatedActivityBuilderModuleClassName())
+        val classViewModelBuilder = ClassName.get(mainProcessor.libraryPackage, generatedViewModelBuilderModuleClassName())
 
-        modulesWithPackage.forEach { moduleName, packageName ->
-            format += ", ${ClassName.get(packageName, moduleName)}.class"
-        }
+        return ArrayList<String>().apply {
+            addAll(roundEnv.getElementsAnnotatedWith(ProvideModule::class.java).map {
+                if (!it.kind.isClass) {
+                    mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR,
+                            "@ProvideModule can be only be applied to a class. " +
+                                    "Error for ${it.simpleName}")
+                }
 
-        return "$format}"
+                val moduleName = it.simpleName.toString()
+                val packageName = mainProcessor.elements.getPackageOf(it).qualifiedName.toString()
+                ", ${ClassName.get(packageName, moduleName)}.class"
+            })
+        }.joinToString(prefix = "{$classAndroidInjectionModule.class, $classActivityBuilder.class, " +
+                "$classViewModelBuilder.class, $classContextModule.class", postfix = "}", separator = "")
     }
 }

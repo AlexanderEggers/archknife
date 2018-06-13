@@ -28,8 +28,6 @@ class MainProcessor : AbstractProcessor() {
     lateinit var appComponentPackage: String
         private set
 
-    val fragmentModuleMap: HashMap<String, String> = HashMap()
-
     @Synchronized
     override fun init(processingEnvironment: ProcessingEnvironment) {
         super.init(processingEnvironment)
@@ -44,8 +42,8 @@ class MainProcessor : AbstractProcessor() {
             prepareMainProcessor(this, roundEnv)
 
             //Annotation processor part - like for the annotation @ProvideActivity
-            ProvideFragmentProcessor().process(this, roundEnv)
-            ProvideActivityProcessor().process(this, roundEnv)
+            val fragmentModuleMap = ProvideFragmentProcessor().process(this, roundEnv)
+            ProvideActivityProcessor().process(this, roundEnv, fragmentModuleMap)
             ProvideViewModelProcessor().process(this, roundEnv)
 
             //AppComponent part - gathers all data from the other processors to build the dagger main file
@@ -61,7 +59,6 @@ class MainProcessor : AbstractProcessor() {
             if (!applicationElement.kind.isClass) {
                 mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
                         "applied to a class. Error for ${applicationElement.simpleName}")
-                continue
             }
 
             val typeElement = applicationElement as TypeElement
