@@ -51,7 +51,7 @@ class ProvideFragmentProcessor {
 
     private fun prepareFragmentMap(mainProcessor: MainProcessor, roundEnv: RoundEnvironment): HashMap<String, ArrayList<Element>> {
         return HashMap<String, ArrayList<Element>>().apply {
-            roundEnv.getElementsAnnotatedWith(ProvideFragment::class.java).map {
+            roundEnv.getElementsAnnotatedWith(ProvideFragment::class.java).forEach {
                 if (!it.kind.isClass) {
                     mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR,
                             "@ProvideFragment can be only be applied to a class. " +

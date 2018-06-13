@@ -40,7 +40,7 @@ class ProvideViewModelProcessor {
 
     private fun generateViewModelProviderMethods(mainProcessor: MainProcessor, roundEnv: RoundEnvironment): List<MethodSpec> {
         return ArrayList<MethodSpec>().apply {
-            roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java).map {
+            addAll(roundEnv.getElementsAnnotatedWith(ProvideViewModel::class.java).map {
                 if (!it.kind.isClass) {
                     mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR,
                             "@ProvideViewModel can be only be applied to a class. " +
@@ -61,7 +61,7 @@ class ProvideViewModelProcessor {
                     addParameter(classViewModelImpl, "viewModel")
                     returns(classViewModel)
                 }.build()
-            }
+            })
         }
     }
 }

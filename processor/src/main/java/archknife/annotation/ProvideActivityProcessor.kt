@@ -34,7 +34,7 @@ class ProvideActivityProcessor {
                                                 fragmentModuleMap: HashMap<String, String>): ArrayList<MethodSpec> {
 
         return ArrayList<MethodSpec>().apply {
-            roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java).map {
+            addAll(roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java).map {
                 if (!it.kind.isClass) {
                     mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR,
                             "@ProvideActivityCan be only be applied to a class. " +
@@ -56,7 +56,7 @@ class ProvideActivityProcessor {
                     }.build())
                     returns(ClassName.get(packageName, activityName))
                 }.build()
-            }
+            })
         }
     }
 }
