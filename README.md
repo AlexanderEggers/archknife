@@ -33,7 +33,7 @@ Archknife has five different annotation types.
 
 1. @ProvideApplication
 
-Like "normal" Dagger-2 implementations, this one also requires you to create an application class. This class needs to be declared inside your manifest in order work. This library provides you with a base application class that includes most of the required Dagger-2 implementation. Simply extend your class with the ArchknifeApplication. In case you want to add your custom AppInjector class to the default dagger initialisation, you can use the ArchknifeApplicationGen class which requires an AppInjector class as a generic type. The AppInjector is responsible in handling the application (activity/fragment) and dagger lifecycle.
+Like "normal" Dagger-2 implementations, this one also requires you to create an application class. This class needs to be declared inside your manifest in order to work. This library provides you with a base application class that includes most of the required Dagger-2 implementation. Simply extend your class with the ArchknifeApplication. In case you want to add your custom AppInjector class to the default dagger initialisation, you can use the ArchknifeApplicationGen class which requires an AppInjector class as a generic type. The AppInjector is responsible in handling the application (activity/fragment) and dagger lifecycle.
 
 ```kotlin
 @ProvideApplication
@@ -42,7 +42,7 @@ class DemoApp : ArchknifeApplication()
 
 2. @ProvideActivity
 
-This annotation can be used to attach a certain activity class to Dagger-2. By doing so, you don't need to add this class to any module and declare even more things. Addition to that you have two different interfaces. You need to use at least one of those: Injectable or HasSupportFragmentInjector. Injectable should be used if this activity won't have any fragments attached to it and HasSupportFragmentInjector is required if you want (Dagger-2) fragments to be displayed within this activity. Those interfaces are also used to differ between Dagger-2 (using one of the interfaces) and non-Dagger-2 activities within the AppInjector (application lifecycle handler for Dagger-2).
+This annotation can be used to attach a certain activity class to Dagger-2. By doing so, you don't need to add this class to any dagger-related class. Addition to that you have two different interfaces. You need to use at least one of those: Injectable or HasSupportFragmentInjector. Injectable should be used if this activity won't have any fragments attached to it and HasSupportFragmentInjector is required if you want (Dagger-2) fragments to be displayed within this activity. Those interfaces are also used to differ between Dagger-2 (using one of the interfaces) and non-Dagger-2 activities within the AppInjector (application lifecycle handler for Dagger-2).
 
 ```kotlin
 @ProvideActivity
@@ -60,7 +60,7 @@ class DemoFragment: Fragment(), Injectable
 
 4. @ProvideViewModel
 
-This annotation takes not only care to provide the viewmodel class to the Dagger-2 but also to provide it to the ViewModelProvider.Factory that is needed to correctly initialise viewmodels inside your app.
+This annotation takes not only care to provide the viewmodel class to Dagger-2 but also to provide it to the ViewModelProvider.Factory that is needed to correctly initialise viewmodels inside your app.
 
 ```kotlin
 @ProvideViewModel
