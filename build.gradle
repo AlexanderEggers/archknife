@@ -4,7 +4,7 @@ buildscript {
         bintray_plugin_version = "1.8.0"
         maven_plugin_version = "2.0"
 
-        kotlin_version = '1.2.50'
+        kotlin_version = '1.2.51'
         dagger_version = '2.16'
         javapoet_version = '1.11.1'
         autoservice_version = '1.0-rc4'
