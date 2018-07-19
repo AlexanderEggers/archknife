@@ -35,7 +35,7 @@ open class AppInjector
      * @since 1.0.0
      * @see ActivityLifecycleCallbacks
      */
-    fun init(application: Application) {
+    open fun init(application: Application) {
         application.registerActivityLifecycleCallbacks(this)
     }
 

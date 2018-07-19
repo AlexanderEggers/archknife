@@ -30,7 +30,7 @@ constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcard
         }
 
         if (creator == null) {
-            throw IllegalArgumentException("unknown model class $modelClass")
+            throw IllegalArgumentException("unknown class $modelClass")
         }
 
         try {

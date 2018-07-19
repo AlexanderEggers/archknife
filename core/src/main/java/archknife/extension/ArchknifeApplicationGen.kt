@@ -40,7 +40,7 @@ abstract class ArchknifeApplicationGen<A: AppInjector> : Application(), HasActiv
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> getAppComponent(): T {
+    open fun <T> getAppComponent(): T {
         return appComponent as T
     }
 
