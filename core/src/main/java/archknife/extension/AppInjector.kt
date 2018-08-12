@@ -45,20 +45,30 @@ open class AppInjector
         setContext(activity)
     }
 
-    override fun onActivityStarted(activity: Activity) {}
+    override fun onActivityStarted(activity: Activity) {
+        //do nothing by default
+    }
 
     @CallSuper
     override fun onActivityResumed(activity: Activity) {
         setContext(activity)
     }
 
-    override fun onActivityPaused(activity: Activity) {}
+    override fun onActivityPaused(activity: Activity) {
+        //do nothing by default
+    }
 
-    override fun onActivityStopped(activity: Activity) {}
+    override fun onActivityStopped(activity: Activity) {
+        //do nothing by default
+    }
 
-    override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle?) {}
+    override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle?) {
+        //do nothing by default
+    }
 
-    override fun onActivityDestroyed(activity: Activity) {}
+    override fun onActivityDestroyed(activity: Activity) {
+        //do nothing by default
+    }
 
     override fun onFragmentCreated(fm: FragmentManager?, f: Fragment?, savedInstanceState: Bundle?) {
         //Determines if the given Fragment is part of the Dagger structure.
