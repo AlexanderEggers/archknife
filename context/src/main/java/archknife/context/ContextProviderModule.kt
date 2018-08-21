@@ -10,7 +10,7 @@ import javax.inject.Singleton
  * @since 1.0.0
  */
 @Module
-class ContextModule {
+class ContextProviderModule {
 
     /**
      * Provides the ContextProvider (context wrapper) to the project. The wrapper classes includes

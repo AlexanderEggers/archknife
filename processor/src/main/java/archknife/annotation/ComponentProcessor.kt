@@ -2,11 +2,12 @@ package archknife.annotation
 
 import archknife.MainProcessor
 import archknife.ProcessorUtil.classAndroidInjectionModule
+import archknife.ProcessorUtil.classAppContextModule
 import archknife.ProcessorUtil.classApplication
 import archknife.ProcessorUtil.classBindsInstance
 import archknife.ProcessorUtil.classComponent
 import archknife.ProcessorUtil.classComponentBuilder
-import archknife.ProcessorUtil.classContextModule
+import archknife.ProcessorUtil.classContextProviderModule
 import archknife.ProcessorUtil.classSingleton
 import archknife.ProcessorUtil.generatedActivityBuilderModuleClassName
 import archknife.ProcessorUtil.generatedComponentClassName
@@ -70,6 +71,7 @@ class ComponentProcessor {
                 ", ${ClassName.get(packageName, moduleName)}.class"
             })
         }.joinToString(prefix = "{$classAndroidInjectionModule.class, $classActivityBuilder.class, " +
-                "$classViewModelBuilder.class, $classContextModule.class", postfix = "}", separator = "")
+                "$classViewModelBuilder.class, $classContextProviderModule.class, " +
+                "$classAppContextModule.class", postfix = "}", separator = "")
     }
 }
