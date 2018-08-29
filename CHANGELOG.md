@@ -3,6 +3,7 @@ Changelog
 
 Version 0.7.0 *(2018-08-29)*
 ----------------------------
+- **BREAKING**: Moved Injectable interface to annotation artifact.
 - **NEW:** Support for the latest dagger version 2.17.
 - **NEW:** Added default module for the application context.
 - **MISC**: Changed the visibility of several methods to allow a custom implementation of those.
