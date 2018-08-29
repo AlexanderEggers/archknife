@@ -2,6 +2,7 @@ package archknife.annotation
 
 import archknife.MainProcessor
 import archknife.ProcessorUtil.classAndroidInjectionModule
+import archknife.ProcessorUtil.classAndroidSupportInjectionModule
 import archknife.ProcessorUtil.classAppContextModule
 import archknife.ProcessorUtil.classApplication
 import archknife.ProcessorUtil.classBindsInstance
@@ -70,8 +71,8 @@ class ComponentProcessor {
                 val packageName = mainProcessor.elements.getPackageOf(it).qualifiedName.toString()
                 ", ${ClassName.get(packageName, moduleName)}.class"
             })
-        }.joinToString(prefix = "{$classAndroidInjectionModule.class, $classActivityBuilder.class, " +
-                "$classViewModelBuilder.class, $classContextProviderModule.class, " +
+        }.joinToString(prefix = "{$classAndroidInjectionModule.class, $classAndroidSupportInjectionModule.class, " +
+                "$classActivityBuilder.class, $classViewModelBuilder.class, $classContextProviderModule.class, " +
                 "$classAppContextModule.class", postfix = "}", separator = "")
     }
 }

@@ -19,6 +19,7 @@ object ProcessorUtil {
     val classComponentBuilder: ClassName = ClassName.get("dagger.Component", "Builder")
     val classBindsInstance: ClassName = ClassName.get("dagger", "BindsInstance")
     val classAndroidInjectionModule: ClassName = ClassName.get("dagger.android", "AndroidInjectionModule")
+    val classAndroidSupportInjectionModule: ClassName = ClassName.get("dagger.android.support", "AndroidSupportInjectionModule")
     val classModule: ClassName = ClassName.get("dagger", "Module")
     val classContributesAndroidInjector: ClassName = ClassName.get("dagger.android", "ContributesAndroidInjector")
     val classBinds: ClassName = ClassName.get("dagger", "Binds")
