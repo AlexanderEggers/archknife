@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks
+import archknife.annotation.util.Injectable
 import archknife.context.ContextProvider
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
