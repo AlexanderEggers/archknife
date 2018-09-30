@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 0.7.0 *(2018-08-29)*
+----------------------------
+- **BREAKING**: Moved Injectable interface to annotation artifact.
+- **NEW:** Support for the latest dagger version 2.17.
+- **NEW:** Added default module for the application context.
+- **MISC**: Changed the visibility of several methods to allow a custom implementation of those.
+- **MISC:** Updated kotlin to version 1.2.61
+
 Version 0.6.0 *(2018-06-13)*
 ----------------------------
 - **NEW:** Added more source code documentation to the library.
