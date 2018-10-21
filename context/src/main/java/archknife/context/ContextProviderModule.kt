@@ -20,7 +20,7 @@ class ContextProviderModule {
      */
     @Singleton
     @Provides
-    fun provideActivityContextProvider(): ContextProvider {
+    fun provideContextProvider(): ContextProvider {
         return ContextProvider
     }
 }

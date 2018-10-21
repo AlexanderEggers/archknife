@@ -1,5 +1,7 @@
 package archknife.context
 
+import android.content.Context
+
 interface OnContextChangedListener {
-    fun onChanged()
+    fun onContextChanged(newContext: Context?)
 }

@@ -24,7 +24,7 @@ object ContextProvider {
             contextRef = WeakReference(context)
 
             listenerList.forEach {
-                it.onChanged()
+                it.onContextChanged(context)
             }
         }
         /**
@@ -34,15 +34,19 @@ object ContextProvider {
          */
         get() = contextRef.get()
 
-    /**
-     * Returns the current context instance as an activity.
-     *
-     * @since 1.0.0
-     */
-    @Suppress("UNCHECKED_CAST")
-    fun <T : Activity> getActivity(): T? {
-        return contextRef.get() as T?
-    }
+    val activity: Activity?
+
+        /**
+         * Returns the current context instance as an activity.
+         *
+         * @since 1.0.0
+         */
+        get() {
+            val context = contextRef.get()
+            return if(context != null && context is Activity) {
+                context
+            } else null
+        }
 
     fun addListener(listener: OnContextChangedListener) {
         listenerList.add(listener)

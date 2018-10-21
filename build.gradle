@@ -1,17 +1,17 @@
 buildscript {
     ext {
-        android_studio_version = "3.2.0"
+        android_studio_version = "3.2.1"
         bintray_plugin_version = "1.8.4"
-        maven_plugin_version = "2.0"
+        maven_plugin_version = "2.1"
 
         kotlin_version = '1.2.71'
         dagger_version = '2.17'
         javapoet_version = '1.11.1'
         autoservice_version = '1.0-rc4'
-        lifecycle_version = '1.1.1'
+        viewModel_version = '1.1.1'
         support_lib_version = '28.0.0'
 
-        archknife_library_version = "0.8.0"
+        archknife_library_version = "0.9.0"
     }
 
     repositories {
