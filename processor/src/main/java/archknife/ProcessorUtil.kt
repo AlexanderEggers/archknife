@@ -28,6 +28,8 @@ object ProcessorUtil {
     fun generatedViewModelBuilderModuleClassName(): String = "Generated_ViewModelBuilderModule"
     fun generatedFragmentModuleClassName(activityName: String): String = "Generated_" + activityName + "Module"
     fun generatedActivityBuilderModuleClassName(): String = "Generated_ActivityBuilderModule"
+    fun generatedServiceBuilderModuleClassName(): String = "Generated_ServiceBuilderModule"
+    fun generatedBroadcastReceiverBuilderModuleClassName(): String = "Generated_BroadcastReceiverBuilderModule"
     fun generatedComponentClassName(): String = "ArchknifeComponent"
 
     fun getLibraryPackage(basePackage: String): String = "$basePackage.di"

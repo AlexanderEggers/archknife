@@ -11,7 +11,9 @@ import archknife.ProcessorUtil.classComponentBuilder
 import archknife.ProcessorUtil.classContextProviderModule
 import archknife.ProcessorUtil.classSingleton
 import archknife.ProcessorUtil.generatedActivityBuilderModuleClassName
+import archknife.ProcessorUtil.generatedBroadcastReceiverBuilderModuleClassName
 import archknife.ProcessorUtil.generatedComponentClassName
+import archknife.ProcessorUtil.generatedServiceBuilderModuleClassName
 import archknife.ProcessorUtil.generatedViewModelBuilderModuleClassName
 import com.squareup.javapoet.*
 import javax.annotation.processing.RoundEnvironment
@@ -58,6 +60,8 @@ class ComponentProcessor {
     private fun createComponentAnnotationFormat(mainProcessor: MainProcessor, roundEnv: RoundEnvironment): String {
         val classActivityBuilder = ClassName.get(mainProcessor.libraryPackage, generatedActivityBuilderModuleClassName())
         val classViewModelBuilder = ClassName.get(mainProcessor.libraryPackage, generatedViewModelBuilderModuleClassName())
+        val classServiceBuilder = ClassName.get(mainProcessor.libraryPackage, generatedServiceBuilderModuleClassName())
+        val classBroadcastReceiverBuilder = ClassName.get(mainProcessor.libraryPackage, generatedBroadcastReceiverBuilderModuleClassName())
 
         return ArrayList<String>().apply {
             addAll(roundEnv.getElementsAnnotatedWith(ProvideModule::class.java).map {
@@ -72,7 +76,8 @@ class ComponentProcessor {
                 ", ${ClassName.get(packageName, moduleName)}.class"
             })
         }.joinToString(prefix = "{$classAndroidInjectionModule.class, $classAndroidSupportInjectionModule.class, " +
-                "$classActivityBuilder.class, $classViewModelBuilder.class, $classContextProviderModule.class, " +
+                "$classActivityBuilder.class, $classViewModelBuilder.class, $classServiceBuilder.class, " +
+                "$classBroadcastReceiverBuilder.class, $classContextProviderModule.class, " +
                 "$classAppContextModule.class", postfix = "}", separator = "")
     }
 }

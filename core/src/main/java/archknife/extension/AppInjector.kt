@@ -71,7 +71,7 @@ open class AppInjector
         //do nothing by default
     }
 
-    override fun onFragmentCreated(fm: FragmentManager?, f: Fragment?, savedInstanceState: Bundle?) {
+    override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
         //Determines if the given Fragment is part of the Dagger structure.
         if (f is Injectable) {
             AndroidSupportInjection.inject(f)

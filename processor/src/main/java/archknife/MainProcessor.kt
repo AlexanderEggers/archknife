@@ -45,6 +45,8 @@ class MainProcessor : AbstractProcessor() {
             val fragmentModuleMap = ProvideFragmentProcessor().process(this, roundEnv)
             ProvideActivityProcessor().process(this, roundEnv, fragmentModuleMap)
             ProvideViewModelProcessor().process(this, roundEnv)
+            ProvideServiceProcessor().process(this, roundEnv)
+            ProvideBroadcastReceiverProcessor().process(this, roundEnv)
 
             //AppComponent part - gathers all data from the other processors to build the dagger main file
             ComponentProcessor().process(this, roundEnv)
@@ -73,7 +75,8 @@ class MainProcessor : AbstractProcessor() {
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
         return mutableSetOf(ProvideActivity::class.java.name, ProvideFragment::class.java.name,
                 ProvideViewModel::class.java.name, ProvideApplication::class.java.name,
-                ProvideModule::class.java.name)
+                ProvideModule::class.java.name, ProvideService::class.java.name,
+                ProvideBroadcastReceiver::class.java.name)
     }
 
     override fun getSupportedSourceVersion(): SourceVersion {

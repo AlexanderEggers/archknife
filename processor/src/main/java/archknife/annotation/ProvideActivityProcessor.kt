@@ -37,7 +37,7 @@ class ProvideActivityProcessor {
             addAll(roundEnv.getElementsAnnotatedWith(ProvideActivity::class.java).map {
                 if (!it.kind.isClass) {
                     mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR,
-                            "@ProvideActivityCan be only be applied to a class. " +
+                            "@ProvideActivity can be only be applied to a class. " +
                                     "Error for ${it.simpleName}")
                 }
 
@@ -45,7 +45,7 @@ class ProvideActivityProcessor {
                 val packageName = mainProcessor.elements.getPackageOf(it).qualifiedName.toString()
                 val fragmentModuleName = fragmentModuleMap[activityName]
 
-                val classFragmentModule = fragmentModuleName?.let {
+                val classFragmentModule = fragmentModuleName?.run {
                     ClassName.get(mainProcessor.libraryPackage + ".fragment", fragmentModuleName)
                 } ?: classEmptyFragmentModule
 

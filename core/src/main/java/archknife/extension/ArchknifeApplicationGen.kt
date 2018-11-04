@@ -2,9 +2,9 @@ package archknife.extension
 
 import android.app.Activity
 import android.app.Application
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import android.app.Service
+import android.content.BroadcastReceiver
+import dagger.android.*
 import javax.inject.Inject
 
 /**
@@ -14,10 +14,17 @@ import javax.inject.Inject
  *
  * @since 1.0.0
  */
-abstract class ArchknifeApplicationGen<A: AppInjector> : Application(), HasActivityInjector {
+abstract class ArchknifeApplicationGen<A: AppInjector> : Application(), HasActivityInjector,
+        HasServiceInjector, HasBroadcastReceiverInjector {
 
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+
+    @Inject
+    lateinit var serviceInjector: DispatchingAndroidInjector<Service>
+
+    @Inject
+    lateinit var broadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
 
     @Inject
     lateinit var appInjector: A
@@ -27,9 +34,9 @@ abstract class ArchknifeApplicationGen<A: AppInjector> : Application(), HasActiv
     override fun onCreate() {
         super.onCreate()
 
-        val daggerClass = Class.forName(javaClass.`package`.name.toString() + ".DaggerArchknifeComponent")
-        val daggerBuilderClass = Class.forName(javaClass.`package`.name.toString() + ".DaggerArchknifeComponent\$Builder")
-        val appComponentClass = Class.forName(javaClass.`package`.name.toString() + ".ArchknifeComponent")
+        val daggerClass = Class.forName(javaClass.`package`!!.name.toString() + ".DaggerArchknifeComponent")
+        val daggerBuilderClass = Class.forName(javaClass.`package`!!.name.toString() + ".DaggerArchknifeComponent\$Builder")
+        val appComponentClass = Class.forName(javaClass.`package`!!.name.toString() + ".ArchknifeComponent")
 
         var builder: Any = daggerClass.getMethod("builder").invoke(null)
         builder = daggerBuilderClass.getDeclaredMethod("application", Application::class.java).invoke(builder, this@ArchknifeApplicationGen)
@@ -46,5 +53,13 @@ abstract class ArchknifeApplicationGen<A: AppInjector> : Application(), HasActiv
 
     override fun activityInjector(): AndroidInjector<Activity> {
         return activityInjector
+    }
+
+    override fun serviceInjector(): AndroidInjector<Service> {
+        return serviceInjector
+    }
+
+    override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver> {
+        return broadcastReceiverInjector
     }
 }
