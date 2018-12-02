@@ -5,27 +5,43 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
-
     defaultConfig {
         applicationId "org.demo.archknife"
         minSdkVersion 14
         targetSdkVersion 28
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    signingConfigs {
+        dev {
+            storeFile file("../keystore/debug.keystore")
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.dev
+
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$support_lib_version"
 
     //implementation "org.archknife:archknife-core:$archknife_library_version"
     //kapt "org.archknife:archknife-processor:$archknife_library_version"
-
-    implementation project(":archknife-core")
-    kapt project (":archknife-processor")
+    implementation project(':archknife-core')
+    kapt project(":archknife-processor")
 }

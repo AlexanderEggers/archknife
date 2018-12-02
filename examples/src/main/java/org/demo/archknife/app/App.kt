@@ -1,4 +1,4 @@
-package org.demo.archknife
+package org.demo.archknife.app
 
 import archknife.annotation.ProvideApplication
 import archknife.extension.ArchknifeApplication

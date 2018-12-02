@@ -5,50 +5,54 @@ import android.content.Context
 import java.lang.ref.WeakReference
 
 /**
- * Context wrapper class that is saving the current context instance into a WeakReference.
+ * Context wrapper class that is saving the current activityContext instance into a WeakReference.
  *
  * @since 1.0.0
  */
 object ContextProvider {
 
-    private var contextRef: WeakReference<Context?> = WeakReference(null)
-    private val listenerList: ArrayList<OnContextChangedListener> = ArrayList()
+    private var activityContextRef: WeakReference<Context?> = WeakReference(null)
+    private var applicationContextRef: WeakReference<Context?> = WeakReference(null)
 
-    var context: Context?
+    var activityContext: Context?
         /**
-         * Sets a new context instance.
+         * Sets a new activityContext instance.
          *
          * @since 1.0.0
          */
-        set(context) {
-            contextRef = WeakReference(context)
-
-            listenerList.forEach {
-                it.onContextChanged(context)
-            }
-        }
+        set(context) { activityContextRef = WeakReference(context) }
         /**
-         * Returns the current context object.
+         * Returns the current activityContext object.
          *
          * @since 1.0.0
          */
-        get() = contextRef.get()
+        get() = activityContextRef.get()
 
     val activity: Activity?
 
         /**
-         * Returns the current context instance as an activity.
+         * Returns the current activityContext instance as an activity.
          *
          * @since 1.0.0
          */
         get() {
-            val context = contextRef.get()
+            val context = activityContextRef.get()
             return if(context != null && context is Activity) {
                 context
             } else null
         }
 
-    fun addListener(listener: OnContextChangedListener) {
-        listenerList.add(listener)
-    }
+    var applicationContext: Context?
+        /**
+         * Sets a new applicationContext instance.
+         *
+         * @since 1.0.0
+         */
+        set(context) { applicationContextRef = WeakReference(context) }
+        /**
+         * Returns the current applicationContext object.
+         *
+         * @since 1.0.0
+         */
+        get() = applicationContextRef.get()
 }

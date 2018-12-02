@@ -37,6 +37,7 @@ open class AppInjector
      * @see ActivityLifecycleCallbacks
      */
     open fun init(application: Application) {
+        contextProvider.applicationContext = application
         application.registerActivityLifecycleCallbacks(this)
     }
 
@@ -79,15 +80,15 @@ open class AppInjector
     }
 
     /**
-     * Assigns a context object to the context provider so it can be used for dependencies that
-     * need an activity context.
+     * Assigns a activityContext object to the activityContext provider so it can be used for dependencies that
+     * need an activity activityContext.
      *
      * @param activity an Activity object
      *
      * @since 1.0.0
      */
     protected open fun setContext(activity: Activity) {
-        contextProvider.context = activity
+        contextProvider.activityContext = activity
     }
 
     /**

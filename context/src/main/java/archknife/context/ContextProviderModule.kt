@@ -5,7 +5,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 /**
- * Module class which is used to provide the context wrapper object to the project.
+ * Module class which is used to provide the activityContext wrapper object to the project.
  *
  * @since 1.0.0
  */
@@ -13,8 +13,8 @@ import javax.inject.Singleton
 class ContextProviderModule {
 
     /**
-     * Provides the ContextProvider (context wrapper) to the project. The wrapper classes includes
-     * the current active context object.
+     * Provides the ContextProvider (activityContext wrapper) to the project. The wrapper classes includes
+     * the current active activityContext object.
      *
      * @since 1.0.0
      */
