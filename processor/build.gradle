@@ -10,7 +10,7 @@ ext {
     libraryName = 'archknife-processor'
     artifact = 'archknife-processor'
 
-    libraryDescription = 'Android annotation library to generate the project\'s activity/fragment/viewmodel dagger structure.'
+    libraryDescription = 'Android annotation library to generate the project\'s dagger structure.'
 
     siteUrl = 'https://github.com/Mordag/archknife'
     gitUrl = 'https://github.com/Mordag/archknife.git'

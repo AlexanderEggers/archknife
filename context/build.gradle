@@ -10,7 +10,7 @@ ext {
     libraryName = 'archknife-context'
     artifact = 'archknife-context'
 
-    libraryDescription = 'Android annotation library to generate the project\'s activity/fragment/viewmodel dagger structure.'
+    libraryDescription = 'Android annotation library to generate the project\'s dagger structure.'
 
     siteUrl = 'https://github.com/Mordag/archknife'
     gitUrl = 'https://github.com/Mordag/archknife.git'
@@ -34,7 +34,7 @@ android {
     buildToolsVersion "28.0.3"
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 16
         versionName "$archknife_library_version"
         consumerProguardFiles 'proguard-rules.pro'
     }
