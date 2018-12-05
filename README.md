@@ -2,9 +2,9 @@ Archknife
 =====
 [![Download](https://api.bintray.com/packages/mordag/android/archknife-core/images/download.svg) ](https://bintray.com/mordag/android/archknife-core/_latestVersion)
 
-Archknife is a android annotation library to generate the project's activity/fragment/viewmodel Dagger-2 structure. Dagger usually needs a certain amount of extra work in order to create and keep a structure. This library helps you to focus on the what really matters: Your App! 
+Archknife is a android annotation library to generate the project's Dagger-2 structure. Dagger usually needs a certain amount of extra work in order to create and keep a structure. This library helps you to focus on the what really matters: Your App! 
 
-By using this library you need to use only a handful of annotation you can assign to your activities, fragments and viewmodels. Nothing more. Due to these annotations all of those classes will be added to the AndroidInjector (Dagger-2 class).
+By using this library you need to use only a handful of annotation you can assign to your activities, fragments, viewmodels, services and broadcast receivers. Nothing more. Due to these annotations all of those classes will be added to the AndroidInjector (Dagger-2 class).
 
 Download
 --------
