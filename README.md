@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-  def archknife_version = "0.8.0"
+  def archknife_version = "0.9.0"
 
   //includes all library artifacts including several helper classes
   implementation "org.archknife:archknife-core:$archknife_version"
@@ -27,7 +27,7 @@ dependencies {
 }
 ```
 
-How do I use Archknife? (Step-by-step introduction for 0.8.0)
+How do I use Archknife? (Step-by-step introduction for 0.9.0)
 -------------------
 Archknife has five different annotation types.
 
@@ -119,7 +119,7 @@ Comments/bugs/questions/pull requests are always welcome!
 Compatibility
 -------------
 
- * The library requires at minimum Android 14.
+ * The library requires at minimum Android 16.
 
 Author
 ------
