@@ -9,12 +9,12 @@ import java.lang.ref.WeakReference
  *
  * @since 1.0.0
  */
-object ContextProvider {
+object ContextProvider: ContextProviderCommunicator {
 
     private var activityContextRef: WeakReference<Context?> = WeakReference(null)
     private var applicationContextRef: WeakReference<Context?> = WeakReference(null)
 
-    var activityContext: Context?
+    override var activityContext: Context?
         /**
          * Sets a new activityContext instance.
          *
@@ -28,7 +28,7 @@ object ContextProvider {
          */
         get() = activityContextRef.get()
 
-    val activity: Activity?
+    override val activity: Activity?
 
         /**
          * Returns the current activityContext instance as an activity.
@@ -42,7 +42,7 @@ object ContextProvider {
             } else null
         }
 
-    var applicationContext: Context?
+    override var applicationContext: Context?
         /**
          * Sets a new applicationContext instance.
          *
