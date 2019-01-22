@@ -1,7 +1,7 @@
 package archknife.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider.Factory
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider.Factory
 
 import javax.inject.Inject
 import javax.inject.Provider

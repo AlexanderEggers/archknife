@@ -38,7 +38,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$support_lib_version"
+    implementation "androidx.appcompat:appcompat:$support_lib_appcompat_version"
 
     //implementation "org.archknife:archknife-core:$archknife_library_version"
     //kapt "org.archknife:archknife-processor:$archknife_library_version"
