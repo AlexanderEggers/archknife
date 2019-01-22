@@ -1,6 +1,6 @@
 package org.demo.archknife
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import archknife.annotation.ProvideViewModel
 import javax.inject.Inject
 

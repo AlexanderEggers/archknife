@@ -52,11 +52,9 @@ tasks.withType(Javadoc).all {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation ("com.android.support:support-fragment:$support_lib_version") {
-        exclude group: "com.android.support", module: "animated-vector-drawable"
-    }
+    implementation ("androidx.fragment:fragment:$support_lib_fragment_version")
 
-    api "android.arch.lifecycle:extensions:$viewModel_version"
+    api "androidx.lifecycle:lifecycle-extensions:$viewModel_version"
 
     api "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"

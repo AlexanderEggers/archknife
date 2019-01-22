@@ -10,8 +10,8 @@ object ProcessorUtil {
     val classContextProviderModule: ClassName = ClassName.get("archknife.context", "ContextProviderModule")
     val classAppContextModule: ClassName = ClassName.get("archknife.context", "AppContextModule")
 
-    val classViewModelProviderFactory: ClassName = ClassName.get("android.arch.lifecycle.ViewModelProvider", "Factory")
-    val classViewModel: ClassName = ClassName.get("android.arch.lifecycle", "ViewModel")
+    val classViewModelProviderFactory: ClassName = ClassName.get("androidx.lifecycle.ViewModelProvider", "Factory")
+    val classViewModel: ClassName = ClassName.get("androidx.lifecycle", "ViewModel")
     val classApplication: ClassName = ClassName.get("android.app", "Application")
 
     val classSingleton: ClassName = ClassName.get("javax.inject", "Singleton")
