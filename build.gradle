@@ -1,10 +1,10 @@
 buildscript {
     ext {
-        android_studio_version = "3.3.0"
+        android_studio_version = "3.3.2"
         bintray_plugin_version = "1.8.4"
         maven_plugin_version = "2.1"
 
-        kotlin_version = '1.3.11'
+        kotlin_version = '1.3.21'
         dagger_version = '2.21'
         javapoet_version = '1.11.1'
         autoservice_version = '1.0-rc4'
