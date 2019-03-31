@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-  def archknife_version = "0.9.0"
+  def archknife_version = "0.10.0"
 
   //includes all library artifacts including several helper classes
   implementation "org.archknife:archknife-core:$archknife_version"
@@ -27,7 +27,7 @@ dependencies {
 }
 ```
 
-How do I use Archknife? (Step-by-step introduction for 0.9.0)
+How do I use Archknife? (Step-by-step introduction for 0.10.0)
 -------------------
 Archknife has five different annotation types.
 
