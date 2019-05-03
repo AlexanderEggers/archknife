@@ -54,7 +54,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation ("androidx.fragment:fragment:$support_lib_fragment_version")
 
-    api "androidx.annotation:annotation:$support_annotation_version"
     api "androidx.lifecycle:lifecycle-extensions:$viewModel_version"
 
     api "com.google.dagger:dagger:$dagger_version"

@@ -12,7 +12,6 @@ buildscript {
 
         support_lib_appcompat_version = '1.0.2'
         support_lib_fragment_version = '1.0.0'
-        support_annotation_version = '1.0.2'
 
         archknife_library_version = "0.11.0"
     }
