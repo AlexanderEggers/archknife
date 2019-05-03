@@ -9,6 +9,7 @@ import archknife.ProcessorUtil.classBindsInstance
 import archknife.ProcessorUtil.classComponent
 import archknife.ProcessorUtil.classComponentBuilder
 import archknife.ProcessorUtil.classContextProviderModule
+import archknife.ProcessorUtil.classKeppClass
 import archknife.ProcessorUtil.classSingleton
 import archknife.ProcessorUtil.generatedActivityBuilderModuleClassName
 import archknife.ProcessorUtil.generatedBroadcastReceiverBuilderModuleClassName
@@ -26,12 +27,14 @@ class ComponentProcessor {
         TypeSpec.interfaceBuilder(generatedComponentClassName()).apply {
             addModifiers(Modifier.PUBLIC)
             addAnnotation(classSingleton)
+            addSuperinterface(classKeppClass)
             addAnnotation(AnnotationSpec.builder(classComponent).apply {
                 addMember("modules", createComponentAnnotationFormat(mainProcessor, roundEnv))
             }.build())
             addType(TypeSpec.interfaceBuilder("Builder").apply {
                 addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 addAnnotation(classComponentBuilder)
+                addSuperinterface(classKeppClass)
                 addMethod(MethodSpec.methodBuilder("application").apply {
                     addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                     addAnnotation(classBindsInstance)

@@ -7,10 +7,12 @@ ext {
     bintrayName = 'archknife-core'
 
     publishedGroupId = 'org.archknife'
-    libraryName = 'archknife-core'
+    libraryName = 'Archknife Core Artifact'
     artifact = 'archknife-core'
+    libraryYear = '2019'
 
-    libraryDescription = 'Android annotation library to generate the project\'s dagger structure.'
+    libraryDescription = 'The Archknife Core Artifact provides all relevant classes to use the ' +
+            'Archknife library.'
 
     siteUrl = 'https://github.com/Mordag/archknife'
     gitUrl = 'https://github.com/Mordag/archknife.git'
@@ -20,9 +22,7 @@ ext {
     developerId = 'mordag'
     developerName = 'Alexander Eggers'
 
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file("local.properties").newDataInputStream())
-    developerEmail = properties.getProperty("user.email", "")
+    developerEmail = ''
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
@@ -54,6 +54,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation ("androidx.fragment:fragment:$support_lib_fragment_version")
 
+    api "androidx.annotation:annotation:$support_annotation_version"
     api "androidx.lifecycle:lifecycle-extensions:$viewModel_version"
 
     api "com.google.dagger:dagger:$dagger_version"
@@ -70,5 +71,7 @@ dependencies {
     api project(":archknife-context")
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+if (project.rootProject.file('local.properties').exists()) {
+    apply from: 'https://raw.githubusercontent.com/Mordag/JCenter/master/install.gradle'
+    apply from: 'https://raw.githubusercontent.com/Mordag/JCenter/master/bintray.gradle'
+}

@@ -9,6 +9,7 @@ object ProcessorUtil {
     val classEmptyFragmentModule: ClassName = ClassName.get("archknife.fragment", "EmptyFragmentModule")
     val classContextProviderModule: ClassName = ClassName.get("archknife.context", "ContextProviderModule")
     val classAppContextModule: ClassName = ClassName.get("archknife.context", "AppContextModule")
+    val classKeppClass: ClassName = ClassName.get("archknife.extension", "KeepClass")
 
     val classViewModelProviderFactory: ClassName = ClassName.get("androidx.lifecycle.ViewModelProvider", "Factory")
     val classViewModel: ClassName = ClassName.get("androidx.lifecycle", "ViewModel")

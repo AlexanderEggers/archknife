@@ -7,10 +7,12 @@ ext {
     bintrayName = 'archknife-processor'
 
     publishedGroupId = 'org.archknife'
-    libraryName = 'archknife-processor'
+    libraryName = 'Archknife Processor Artifact'
     artifact = 'archknife-processor'
+    libraryYear = '2019'
 
-    libraryDescription = 'Android annotation library to generate the project\'s dagger structure.'
+    libraryDescription = 'The Archknife Processor Artifact provides the annotation processor to ' +
+            'generate the needed classes for the Archknife library.'
 
     siteUrl = 'https://github.com/Mordag/archknife'
     gitUrl = 'https://github.com/Mordag/archknife.git'
@@ -20,9 +22,7 @@ ext {
     developerId = 'mordag'
     developerName = 'Alexander Eggers'
 
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file("local.properties").newDataInputStream())
-    developerEmail = properties.getProperty("user.email", "")
+    developerEmail = ''
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
@@ -45,5 +45,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-processor:$dagger_version"
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+if (project.rootProject.file('local.properties').exists()) {
+    apply from: 'https://raw.githubusercontent.com/Mordag/JCenter/master/install.gradle'
+    apply from: 'https://raw.githubusercontent.com/Mordag/JCenter/master/bintray.gradle'
+}

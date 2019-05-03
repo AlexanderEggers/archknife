@@ -7,10 +7,12 @@ ext {
     bintrayName = 'archknife-context'
 
     publishedGroupId = 'org.archknife'
-    libraryName = 'archknife-context'
+    libraryName = 'Archknife Context Artifact'
     artifact = 'archknife-context'
+    libraryYear = '2019'
 
-    libraryDescription = 'Android annotation library to generate the project\'s dagger structure.'
+    libraryDescription = 'The Archknife Context Artifact provides helper classes for accessing ' +
+            'a Android context object using Dagger.'
 
     siteUrl = 'https://github.com/Mordag/archknife'
     gitUrl = 'https://github.com/Mordag/archknife.git'
@@ -20,9 +22,7 @@ ext {
     developerId = 'mordag'
     developerName = 'Alexander Eggers'
 
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file("local.properties").newDataInputStream())
-    developerEmail = properties.getProperty("user.email", "")
+    developerEmail = ''
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
@@ -57,5 +57,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+if (project.rootProject.file('local.properties').exists()) {
+    apply from: 'https://raw.githubusercontent.com/Mordag/JCenter/master/install.gradle'
+    apply from: 'https://raw.githubusercontent.com/Mordag/JCenter/master/bintray.gradle'
+}
