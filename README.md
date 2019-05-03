@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-  def archknife_version = "0.10.0"
+  def archknife_version = "0.11.0"
 
   //includes all library artifacts including several helper classes
   implementation "org.archknife:archknife-core:$archknife_version"
@@ -27,7 +27,7 @@ dependencies {
 }
 ```
 
-How do I use Archknife? (Step-by-step introduction for 0.10.0)
+How do I use Archknife? (Step-by-step introduction for 0.11.0)
 -------------------
 Archknife has five different annotation types.
 
@@ -102,13 +102,6 @@ class DemoModule
 6. @ProvideService and @ProvideBroadcastReceiver
 
 If you want to add BroadcastReceiver or Services to your app, you can also use ArchKnife to annotate these classes. Keep in mind that both classes needs to execute the AndroidInjection.inject(...). The Service requires this method class in it's onCreate, the BroadcastReceiver in it's onReceive.
-
-ProGuard
-------
-All Archknife related classes will be added to the application package. It is recommended to have a seperate package from your app that only includes your application class.
-```
--keep class {MY_APPLICATION_PACKAGE}.** { *; }
-```
 
 Status
 ------
