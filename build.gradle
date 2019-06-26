@@ -10,7 +10,7 @@ buildscript {
 
         javapoet_version = '1.11.1'
         autoservice_version = '1.0-rc5'
-        incap_processor_version = "0.2"
+        incap_version = "0.2"
 
         support_lib_appcompat_version = '1.0.2'
         support_lib_fragment_version = '1.0.0'
