@@ -4,6 +4,8 @@ import archknife.ProcessorUtil.getLibraryPackage
 import archknife.annotation.*
 import com.google.auto.service.AutoService
 import com.squareup.javapoet.ClassName
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessor
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType
 import java.io.IOException
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
@@ -12,6 +14,7 @@ import javax.lang.model.util.Elements
 import javax.tools.Diagnostic
 
 @AutoService(Processor::class)
+@IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.ISOLATING)
 class MainProcessor : AbstractProcessor() {
 
     lateinit var filer: Filer
