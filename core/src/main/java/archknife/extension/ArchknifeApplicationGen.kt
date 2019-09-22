@@ -1,10 +1,9 @@
 package archknife.extension
 
-import android.app.Activity
 import android.app.Application
-import android.app.Service
-import android.content.BroadcastReceiver
-import dagger.android.*
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
 /**
@@ -14,17 +13,10 @@ import javax.inject.Inject
  *
  * @since 1.0.0
  */
-abstract class ArchknifeApplicationGen<A: AppInjector> : Application(), HasActivityInjector,
-        HasServiceInjector, HasBroadcastReceiverInjector {
+abstract class ArchknifeApplicationGen<A : AppInjector> : Application(), HasAndroidInjector {
 
     @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
-
-    @Inject
-    lateinit var serviceInjector: DispatchingAndroidInjector<Service>
-
-    @Inject
-    lateinit var broadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var appInjector: A
@@ -51,15 +43,7 @@ abstract class ArchknifeApplicationGen<A: AppInjector> : Application(), HasActiv
         return appComponent as T
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return activityInjector
-    }
-
-    override fun serviceInjector(): AndroidInjector<Service> {
-        return serviceInjector
-    }
-
-    override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver> {
-        return broadcastReceiverInjector
+    override fun androidInjector(): AndroidInjector<Any> {
+        return androidInjector
     }
 }

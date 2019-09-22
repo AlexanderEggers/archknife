@@ -12,8 +12,8 @@ import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
 import archknife.annotation.util.Injectable
 import archknife.context.ContextProvider
 import dagger.android.AndroidInjection
+import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -96,12 +96,11 @@ open class AppInjector
      * the Dagger dependencies and attaches custom Fragment lifecycle callbacks to the Activity.
      *
      * @since 1.0.0
-     * @see HasSupportFragmentInjector
      * @see FragmentLifecycleCallbacks
      */
     protected open fun handleActivity(activity: Activity) {
         //Determines if the given Activity is part of the Dagger structure.
-        if (activity is Injectable || activity is HasSupportFragmentInjector) {
+        if (activity is Injectable || activity is HasAndroidInjector) {
             AndroidInjection.inject(activity)
         }
 
