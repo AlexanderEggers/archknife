@@ -21,7 +21,7 @@ abstract class ArchknifeApplicationGen<A : AppInjector> : Application(), HasAndr
     @Inject
     lateinit var appInjector: A
 
-    private lateinit var appComponent: Any
+    private var appComponent: Any? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -30,7 +30,7 @@ abstract class ArchknifeApplicationGen<A : AppInjector> : Application(), HasAndr
         val daggerBuilderClass = Class.forName(javaClass.`package`!!.name.toString() + ".DaggerArchknifeComponent\$Builder")
         val appComponentClass = Class.forName(javaClass.`package`!!.name.toString() + ".ArchknifeComponent")
 
-        var builder: Any = daggerClass.getMethod("builder").invoke(null)
+        var builder: Any? = daggerClass.getMethod("builder").invoke(null)
         builder = daggerBuilderClass.getDeclaredMethod("application", Application::class.java).invoke(builder, this@ArchknifeApplicationGen)
         appComponent = daggerBuilderClass.getDeclaredMethod("build").invoke(builder)
         appComponentClass.getDeclaredMethod("inject", javaClass).invoke(appComponent, this)
@@ -39,8 +39,8 @@ abstract class ArchknifeApplicationGen<A : AppInjector> : Application(), HasAndr
     }
 
     @Suppress("UNCHECKED_CAST")
-    open fun <T> getAppComponent(): T {
-        return appComponent as T
+    open fun <T> getAppComponent(): T? {
+        return appComponent as T?
     }
 
     override fun androidInjector(): AndroidInjector<Any> {

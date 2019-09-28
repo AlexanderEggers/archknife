@@ -28,11 +28,11 @@ class ProvideFragmentProcessor {
                     addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                     addAnnotation(classModule)
 
-                    elements.forEach {
-                        val fragmentName = it.simpleName.toString()
-                        val packageName = mainProcessor.elements.getPackageOf(it).qualifiedName.toString()
+                    elements.forEach { element ->
+                        val fragmentName = element.simpleName.toString()
+                        val packageName = mainProcessor.elements.getPackageOf(element).qualifiedName.toString()
 
-                        addMethod(MethodSpec.methodBuilder("contribute${it.simpleName}").apply {
+                        addMethod(MethodSpec.methodBuilder("contribute${element.simpleName}").apply {
                             addModifiers(Modifier.ABSTRACT)
                             addAnnotation(classContributesAndroidInjector)
                             returns(ClassName.get(packageName, fragmentName))
