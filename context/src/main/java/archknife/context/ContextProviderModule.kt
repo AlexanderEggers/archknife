@@ -13,14 +13,14 @@ import javax.inject.Singleton
 class ContextProviderModule {
 
     /**
-     * Provides the ContextProvider (activityContext wrapper) to the project. The wrapper classes includes
-     * the current active activityContext object.
+     * Provides the ContextProvider (activityContext wrapper) to the project. The wrapper classes
+     * includes the current active activityContext object.
      *
      * @since 1.0.0
      */
     @Singleton
     @Provides
     fun provideContextProvider(): ContextProvider {
-        return ContextProvider
+        return ContextProvider()
     }
 }

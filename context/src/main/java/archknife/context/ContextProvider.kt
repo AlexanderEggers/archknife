@@ -9,7 +9,7 @@ import java.lang.ref.WeakReference
  *
  * @since 1.0.0
  */
-object ContextProvider: ContextProviderCommunicator {
+class ContextProvider: ContextProviderCommunicator {
 
     private var activityContextRef: WeakReference<Context?> = WeakReference(null)
     private var applicationContextRef: WeakReference<Context?> = WeakReference(null)
