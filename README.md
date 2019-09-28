@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-  def archknife_version = "0.11.0"
+  def archknife_version = "1.0.0-rc1"
 
   //includes all library artifacts including several helper classes
   implementation "org.archknife:archknife-core:$archknife_version"
@@ -27,7 +27,7 @@ dependencies {
 }
 ```
 
-How do I use Archknife? (Step-by-step introduction for 0.11.0)
+How do I use Archknife? (Step-by-step introduction for 1.0.0-rc1)
 -------------------
 Archknife has five different annotation types.
 
@@ -42,11 +42,11 @@ class DemoApp : ArchknifeApplication()
 
 2. @ProvideActivity
 
-This annotation can be used to attach a certain activity class to Dagger-2. By doing so, you don't need to add this class to any dagger-related class. Addition to that you have two different interfaces. You need to use at least one of those: Injectable or HasSupportFragmentInjector. Injectable should be used if this activity won't have any fragments attached to it and HasSupportFragmentInjector is required if you want (Dagger-2) fragments to be displayed within this activity. Those interfaces are also used to differ between Dagger-2 (using one of the interfaces) and non-Dagger-2 activities within the AppInjector (application lifecycle handler for Dagger-2).
+This annotation can be used to attach a certain activity class to Dagger-2. By doing so, you don't need to add this class to any dagger-related class. Addition to that you have two different interfaces. You need to use at least one of those: Injectable or HasAndroidInjector. Injectable should be used if this activity won't have any fragments attached to it and HasAndroidInjector is required if you want (Dagger-2) fragments to be displayed within this activity. Those interfaces are also used to differ between Dagger-2 (using one of the interfaces) and non-Dagger-2 activities within the AppInjector (application lifecycle handler for Dagger-2).
 
 ```kotlin
 @ProvideActivity
-class DemoActivity: AppCompatActivity(), HasSupportFragmentInjector
+class DemoActivity: AppCompatActivity(), HasAndroidInjector
 ```
 
 3. @ProvideFragment
@@ -126,4 +126,4 @@ Apache 2.0. See the [LICENSE][1] file for details.
 [1]: https://github.com/Mordag/archknife/blob/master/LICENSE
 [2]: https://github.com/Mordag
 [3]: https://github.com/Mordag/archknife/tree/master/examples
-[4]: http://square.github.io/dagger/
+[4]: https://dagger.dev/users-guide
