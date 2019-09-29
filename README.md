@@ -105,7 +105,7 @@ If you want to add BroadcastReceiver or Services to your app, you can also use A
 
 Status
 ------
-Version 1.0.0 is currently under development in the master branch.
+Version 1.0.0 is currently under development in the develop branch.
 
 Comments/bugs/questions/pull requests are always welcome!
 
