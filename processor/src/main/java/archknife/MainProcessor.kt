@@ -16,7 +16,6 @@ import javax.tools.Diagnostic
 
 @AutoService(Processor::class)
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.ISOLATING)
-@SupportedAnnotationTypes(value = ["archknife.annotation.ProvideActivity"])
 class MainProcessor : AbstractProcessor() {
 
     lateinit var filer: Filer
