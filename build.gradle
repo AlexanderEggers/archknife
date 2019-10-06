@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        android_studio_version = '3.5.0'
+        android_studio_version = '3.5.1'
         bintray_plugin_version = "1.8.4"
         maven_plugin_version = "2.1"
 
@@ -15,7 +15,7 @@ buildscript {
         support_lib_appcompat_version = '1.1.0'
         support_lib_fragment_version = '1.1.0'
 
-        archknife_library_version = "1.0.0-rc1"
+        archknife_library_version = "1.0.0-rc2"
     }
 
     repositories {

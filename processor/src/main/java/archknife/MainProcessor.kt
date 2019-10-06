@@ -9,12 +9,14 @@ import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType
 import java.io.IOException
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
+import javax.lang.model.element.Element
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 import javax.tools.Diagnostic
 
 @AutoService(Processor::class)
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.ISOLATING)
+@SupportedAnnotationTypes(value = ["archknife.annotation.ProvideActivity"])
 class MainProcessor : AbstractProcessor() {
 
     lateinit var filer: Filer
@@ -42,7 +44,7 @@ class MainProcessor : AbstractProcessor() {
     override fun process(set: MutableSet<out TypeElement>, roundEnv: RoundEnvironment): Boolean {
         try {
             //Determines the package and application for the processors
-            prepareMainProcessor(this, roundEnv)
+            val applicationElement = prepareMainProcessor(roundEnv)
 
             //Annotation processor part - like for the annotation @ProvideActivity
             val fragmentModuleMap = ProvideFragmentProcessor().process(this, roundEnv)
@@ -52,27 +54,29 @@ class MainProcessor : AbstractProcessor() {
             ProvideBroadcastReceiverProcessor().process(this, roundEnv)
 
             //AppComponent part - gathers all data from the other processors to build the dagger main file
-            ComponentProcessor().process(this, roundEnv)
+            ComponentProcessor().process(this, roundEnv, applicationElement!!)
         } catch (e: IOException) {
             e.printStackTrace()
         }
         return true
     }
 
-    private fun prepareMainProcessor(mainProcessor: MainProcessor, roundEnv: RoundEnvironment) {
+    private fun prepareMainProcessor(roundEnv: RoundEnvironment): Element? {
         for (applicationElement in roundEnv.getElementsAnnotatedWith(ProvideApplication::class.java)) {
             if (!applicationElement.kind.isClass) {
-                mainProcessor.messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
+                messager.printMessage(Diagnostic.Kind.ERROR, "Can be only be " +
                         "applied to a class. Error for ${applicationElement.simpleName}")
             }
 
             val typeElement = applicationElement as TypeElement
-            appComponentPackage = mainProcessor.elements.getPackageOf(typeElement).qualifiedName.toString()
+            appComponentPackage = elements.getPackageOf(typeElement).qualifiedName.toString()
             libraryPackage = getLibraryPackage(appComponentPackage)
             applicationClassName = ClassName.get(appComponentPackage, typeElement.simpleName.toString())
 
-            break
+            return applicationElement
         }
+
+        return null
     }
 
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
