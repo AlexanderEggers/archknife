@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-  def archknife_version = "1.0.0-rc2"
+  def archknife_version = "1.0.0"
 
   //includes all library artifacts including several helper classes
   implementation "org.archknife:archknife-core:$archknife_version"
@@ -27,7 +27,7 @@ dependencies {
 }
 ```
 
-How do I use Archknife? (Step-by-step introduction for 1.0.0-rc2)
+How do I use Archknife? (Step-by-step introduction for 1.0.0)
 -------------------
 Archknife has five different annotation types.
 
@@ -35,8 +35,10 @@ Archknife has five different annotation types.
 
 Like "normal" Dagger-2 implementations, this one also requires you to create an application class. This class needs to be declared inside your manifest in order to work. This library provides you with a base application class that includes most of the required Dagger-2 implementation. Simply extend your class with the ArchknifeApplication. In case you want to add your custom AppInjector class to the default dagger initialisation, you can use the ArchknifeApplicationGen class which requires an AppInjector class as a generic type. The AppInjector is responsible in handling the application (activity/fragment) and dagger lifecycle.
 
+The annotation @ProvideApplication also has an optional (array-based) parameter "externalModuleClasses". These module classes are outside of the classpath for the current project. Due to the processor restrictions, archknife won't be able to pick up any 3rd party module classes. This can be avoided by adding these 3rd party module to this array. Ensure that the modules are annotated with @Module, otherwise the dagger-v2 processor will fail.
+
 ```kotlin
-@ProvideApplication
+@ProvideApplication(externalModuleClasses = [HelperModule::class])
 class DemoApp : ArchknifeApplication()
 ```
 
@@ -113,6 +115,7 @@ Compatibility
 -------------
 
  * The library requires at minimum Android 16.
+ * This library supports dagger-v2 using 2.24 and higher (version higher than 2.24 are depending on possible breaking changes).
 
 Author
 ------
