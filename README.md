@@ -107,7 +107,7 @@ If you want to add BroadcastReceiver or Services to your app, you can also use A
 
 Status
 ------
-Version 1.1.0 is currently under development in the develop branch. The latest stable version is 1.0.0 which can be found in the 1.0.x branch.
+Version 1.1.0 is currently under development in the develop branch. The latest stable version is 1.0.0 which can be found in the stable/1.0.x branch.
 
 Comments/bugs/questions/pull requests are always welcome!
 
