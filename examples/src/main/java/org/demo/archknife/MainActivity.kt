@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewViewModel = ViewModelProviders.of(this, viewModelFactory)
+        mainViewViewModel = ViewModelProvider(viewModelStore, viewModelFactory)
                 .get(MainActivityViewModel::class.java)
     }
 
