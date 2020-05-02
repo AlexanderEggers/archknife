@@ -15,7 +15,7 @@ import javax.lang.model.util.Elements
 import javax.tools.Diagnostic
 
 @AutoService(Processor::class)
-@IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.ISOLATING)
+@IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 class MainProcessor : AbstractProcessor() {
 
     lateinit var filer: Filer
