@@ -2,7 +2,6 @@ package archknife.annotation
 
 import archknife.MainProcessor
 import archknife.ProcessorUtil.classContributesAndroidInjector
-import archknife.ProcessorUtil.classEmptyFragmentModule
 import archknife.ProcessorUtil.classModule
 import archknife.ProcessorUtil.generatedActivityBuilderModuleClassName
 import com.squareup.javapoet.*
@@ -47,12 +46,14 @@ class ProvideActivityProcessor {
 
                 val classFragmentModule = fragmentModuleName?.run {
                     ClassName.get(mainProcessor.libraryPackage + ".fragment", fragmentModuleName)
-                } ?: classEmptyFragmentModule
+                }
 
                 MethodSpec.methodBuilder("contribute$activityName").apply {
                     addModifiers(Modifier.ABSTRACT)
                     addAnnotation(AnnotationSpec.builder(classContributesAndroidInjector).apply {
-                        addMember("modules", "$classFragmentModule.class")
+                        if(classFragmentModule != null) {
+                            addMember("modules", "$classFragmentModule.class")
+                        }
                     }.build())
                     returns(ClassName.get(packageName, activityName))
                 }.build()
