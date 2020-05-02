@@ -3,7 +3,6 @@ package org.demo.archknife
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import archknife.annotation.ProvideActivity
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
