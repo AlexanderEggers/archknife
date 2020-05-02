@@ -44,6 +44,6 @@ dependencies {
     implementation project(':archknife-core')
     kapt project(":archknife-processor")
 
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    //kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    //kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 }

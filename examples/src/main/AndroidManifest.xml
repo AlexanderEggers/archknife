@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.demo.archknife">
+    package="org.demo.archknife.example">
 
     <application
-        android:name=".app.App"
+        android:name="org.demo.archknife.app.App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".ServiceTest" />
+        <service android:name="org.demo.archknife.ServiceTest" />
     </application>
 
 </manifest>
