@@ -15,7 +15,7 @@ buildscript {
         support_lib_appcompat_version = '1.1.0'
         support_lib_fragment_version = '1.2.4'
 
-        archknife_library_version = "1.1.0"
+        archknife_library_version = "1.1.0-rc01"
     }
 
     repositories {
