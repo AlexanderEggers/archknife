@@ -45,15 +45,18 @@ class MainProcessor : AbstractProcessor() {
             //Determines the package and application for the processors
             val applicationElement = prepareMainProcessor(roundEnv)
 
-            //Annotation processor part - like for the annotation @ProvideActivity
-            val fragmentModuleMap = ProvideFragmentProcessor().process(this, roundEnv)
-            ProvideActivityProcessor().process(this, roundEnv, fragmentModuleMap)
-            ProvideViewModelProcessor().process(this, roundEnv)
-            ProvideServiceProcessor().process(this, roundEnv)
-            ProvideBroadcastReceiverProcessor().process(this, roundEnv)
+            //only in the first round, the processor can find the relevant annotation elements
+            if(applicationElement != null) {
+                //Annotation processor part - like for the annotation @ProvideActivity
+                val fragmentModuleMap = ProvideFragmentProcessor().process(this, roundEnv)
+                ProvideActivityProcessor().process(this, roundEnv, fragmentModuleMap)
+                ProvideViewModelProcessor().process(this, roundEnv)
+                ProvideServiceProcessor().process(this, roundEnv)
+                ProvideBroadcastReceiverProcessor().process(this, roundEnv)
 
-            //AppComponent part - gathers all data from the other processors to build the dagger main file
-            ComponentProcessor().process(this, roundEnv, applicationElement!!)
+                //AppComponent part - gathers all data from the other processors to build the dagger main file
+                ComponentProcessor().process(this, roundEnv, applicationElement)
+            }
         } catch (e: IOException) {
             e.printStackTrace()
         }
