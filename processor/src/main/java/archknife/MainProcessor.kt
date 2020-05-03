@@ -42,20 +42,21 @@ class MainProcessor : AbstractProcessor() {
 
     override fun process(set: MutableSet<out TypeElement>, roundEnv: RoundEnvironment): Boolean {
         try {
-            //Determines the package and application for the processors
-            val applicationElement = prepareMainProcessor(roundEnv)
+            //only in the first round has elements that can be processed
+            if (set.isNotEmpty()) {
+                //Determines the package and application for the processors
+                val applicationElement = prepareMainProcessor(roundEnv)
+                if (applicationElement != null) {
+                    //Annotation processor part - like for the annotation @ProvideActivity
+                    val fragmentModuleMap = ProvideFragmentProcessor().process(this, roundEnv)
+                    ProvideActivityProcessor().process(this, roundEnv, fragmentModuleMap)
+                    ProvideViewModelProcessor().process(this, roundEnv)
+                    ProvideServiceProcessor().process(this, roundEnv)
+                    ProvideBroadcastReceiverProcessor().process(this, roundEnv)
 
-            //only in the first round, the processor can find the relevant annotation elements
-            if(applicationElement != null) {
-                //Annotation processor part - like for the annotation @ProvideActivity
-                val fragmentModuleMap = ProvideFragmentProcessor().process(this, roundEnv)
-                ProvideActivityProcessor().process(this, roundEnv, fragmentModuleMap)
-                ProvideViewModelProcessor().process(this, roundEnv)
-                ProvideServiceProcessor().process(this, roundEnv)
-                ProvideBroadcastReceiverProcessor().process(this, roundEnv)
-
-                //AppComponent part - gathers all data from the other processors to build the dagger main file
-                ComponentProcessor().process(this, roundEnv, applicationElement)
+                    //AppComponent part - gathers all data from the other processors to build the dagger main file
+                    ComponentProcessor().process(this, roundEnv, applicationElement)
+                }
             }
         } catch (e: IOException) {
             e.printStackTrace()
