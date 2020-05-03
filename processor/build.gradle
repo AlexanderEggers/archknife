@@ -9,7 +9,7 @@ ext {
     publishedGroupId = 'org.archknife'
     libraryName = 'Archknife Processor Artifact'
     artifact = 'archknife-processor'
-    libraryYear = '2019'
+    libraryYear = '2020'
 
     libraryDescription = 'The Archknife Processor Artifact provides the annotation processor to ' +
             'generate the needed classes for the Archknife library.'

@@ -9,7 +9,7 @@ ext {
     publishedGroupId = 'org.archknife'
     libraryName = 'Archknife Core Artifact'
     artifact = 'archknife-core'
-    libraryYear = '2019'
+    libraryYear = '2020'
 
     libraryDescription = 'The Archknife Core Artifact provides all relevant classes to use the ' +
             'Archknife library.'

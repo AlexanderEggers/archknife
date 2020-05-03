@@ -9,7 +9,7 @@ ext {
     publishedGroupId = 'org.archknife'
     libraryName = 'Archknife Context Artifact'
     artifact = 'archknife-context'
-    libraryYear = '2019'
+    libraryYear = '2020'
 
     libraryDescription = 'The Archknife Context Artifact provides helper classes for accessing ' +
             'a Android context object using Dagger.'
