@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-  def archknife_version = "1.0.0"
+  def archknife_version = "1.1.0"
 
   //includes all library artifacts including several helper classes
   implementation "org.archknife:archknife-core:$archknife_version"
@@ -27,7 +27,7 @@ dependencies {
 }
 ```
 
-How do I use Archknife? (Step-by-step introduction for 1.0.0)
+How do I use Archknife? (Step-by-step introduction for 1.1.0)
 -------------------
 Archknife has five different annotation types.
 
@@ -107,7 +107,7 @@ If you want to add BroadcastReceiver or Services to your app, you can also use A
 
 Status
 ------
-Version 1.1.0 is currently under development in the develop branch. The latest stable version is 1.0.0 which can be found in the stable/1.0.x branch.
+Version 1.2.0 is currently under development in the develop branch. The latest stable version is 1.1.0 which can be found in the stable/1.1.x branch.
 
 Comments/bugs/questions/pull requests are always welcome!
 
@@ -115,7 +115,7 @@ Compatibility
 -------------
 
  * The library requires at minimum Android 16.
- * This library supports dagger-v2 using 2.24 and higher (version higher than 2.24 are depending on possible breaking changes).
+ * This library supports dagger-v2 using 2.27 and higher (version higher than 2.27 are depending on possible breaking changes).
 
 Author
 ------
